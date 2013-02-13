@@ -1,0 +1,31 @@
+﻿<!DOCTYPE html>
+<title>Video element</title>
+<style>html { background: #eee; }
+body {
+	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+	font-size: 0.9em;
+	line-height: 1.2;
+	color: #222;
+}
+
+a { color: #227; }
+
+pre { border: 1px #ddd solid; background: #FF9; font-size: 1.2em; padding: 1em; }
+
+video { display: block; }
+
+</style>
+<video controls>
+	<source src="../videos/fridge.mp4" type='video/mp4; codecs="avc1.42E01E,mp4a.40.2"'>
+	<!-- fallback content -->
+	<p>Shown to browsers that don't support video element,
+	and NOT just browsers that don't support MP4/H.264</p>
+</video>
+<pre><code>
+&lt;video controls>
+  &lt;source src="../videos/fridge.mp4" type="video/mp4">
+  &lt;!-- fallback content -->
+  &lt;p><strong>Shown to browsers that don't support video element,
+  and NOT just browsers that don't support MP4/H.264</strong>&lt;/p>
+&lt;/video>
+</code></pre>

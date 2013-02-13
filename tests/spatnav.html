@@ -1,0 +1,38 @@
+﻿<!DOCTYPE html>
+<title>Spatnav highlight testing</title>
+<style>
+.h a:hover { outline: 0 solid; }
+.ha a:hover, .ha a:active { outline: 0 solid; }
+.fha a:focus, .fha a:hover, .fha a:active { outline: 0 solid; }
+</style>
+<h1>Spatnav highlight testing</h1>
+<p><code>outline:none;</code> doesn't work. <code>outline:0 solid;</code> should.</p>
+
+
+<div>
+<h2>Regular links</h2>
+<p><a href="#">Link</a></p>
+<p><a href="#">Link</a></p>
+<p><a href="#">Link</a></p>
+</div>
+
+<div class="h">
+<h2>:hover outline:none;</h2>
+<p><a href="#">Link</a></p>
+<p><a href="#">Link</a></p>
+<p><a href="#">Link</a></p>
+</div>
+
+<div class="ha">
+<h2>:hover,:active outline:none;</h2>
+<p><a href="#">Link</a></p>
+<p><a href="#">Link</a></p>
+<p><a href="#">Link</a></p>
+</div>
+
+<div class="fha">
+<h2>:focus,:hover,:active outline:none;</h2>
+<p><a href="#">Link</a></p>
+<p><a href="#">Link</a></p>
+<p><a href="#">Link</a></p>
+</div>

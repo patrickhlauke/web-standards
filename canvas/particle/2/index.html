@@ -1,0 +1,35 @@
+﻿<!doctype html>
+<head>
+<title>Particle party</title>
+<meta name="viewport" content="width=420, user-scalable=no">
+<script src="/patrickl/scripts/ga.js"></script>
+<script src="particleSystem.js"></script>
+<style>
+html, body { background: #999; color: #fff; margin: 0; padding: 0; }
+body {
+	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+	font-size: 0.9em;
+	line-height: 1.2;
+	margin: 10px;
+	width: 400px;
+}
+canvas { margin: 5px 0; }
+p small { margin: 0; padding: 0; font-size: 0.75em; }
+a { color: #eef; }
+</style>
+</head>
+<body>
+<h1>Particle party</h1>
+<canvas width="400" height="400" id="emitter-canvas"></canvas>
+<p>number of particles: <output id="pn"></output></p>
+<p>Move or click mouse to pop the bubbles. Double-click to reset.</p>
+<p><small>You can also check out the simpler, <a href="../">self-running version of particle party</a>.</small></p>
+<p><small>A basic recreation of <a href="http://www.cesmes.fi/#pallo.swf">http://www.cesmes.fi/#pallo.swf</a> using JavaScript and <code>canvas</code>. Particle system based on <a href="http://www.zen-sign.com/2010/02/javascript-particle-emitter/">Zen-Sign's HTML 5 &amp; JavaScript Particle Emitter</a>.</small></p>
+
+<script>
+window.addEventListener('load',function() {
+	var emitter = new Emitter(document.getElementById('emitter-canvas'));
+	emitter.init();
+}, false);
+</script>
+</body>

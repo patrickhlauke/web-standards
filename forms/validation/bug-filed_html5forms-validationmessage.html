@@ -1,0 +1,26 @@
+<!doctype>
+<head>
+<title>HTML5 form validation validationMessage test</title>
+</head>
+<body>
+<form onsubmit="customError(this)">
+<label for="foo">A required email field</label>
+<input id="foo" name="foo" type="email" required>
+<label for="bar">A required textarea</label>
+<textarea id="bar" name="bar" required></textarea>
+<script>
+function customError(form) {
+	var fields = form.querySelectorAll('input,select,textarea');
+	for(var i=0; fields[i]; i++) {
+		if (!fields[i].validity.valid) {
+			alert(fields[i].validationMessage);
+		}
+	}
+}
+</script>
+<input type="submit" value="submit">
+</form>
+<p>in our current implementation it seems that the validationMessage attribute is not present to start with (at least according to a quick look in DFL), and only comes into existence when i first run setCustomValidity (at which point it takes on my custom error message). once i reset setCustomValidity(''), the attribute remains present but empty.</p>
+
+<p>if i understand <a href="http://www.w3.org/TR/html5/association-of-controls-and-forms.html#dom-cva-validationmessage">http://www.w3.org/TR/html5/association-of-controls-and-forms.html#dom-cva-validationmessage</a> correctly, the attribute should always be there, and contain a "preview" if you will of the error message that would be displayed to the user if we were to submit the form right now. if should contain our localised strings (e.g. "This is a required field") when the form field has validity issues. if i set it with setCustomValidity, it should contain the custom message (this part works correctly now). if i reset setCustomValidity, it should revert back to our localised default strings. if the field satisfies the validation constraints (validity.valid == true) then it should be empty string.</p>
+</body>

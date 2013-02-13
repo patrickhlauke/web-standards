@@ -1,0 +1,22 @@
+<!doctype>
+<head>
+<title>HTML5 form validation example - setCustomValidity messages</title>
+<script>
+function customError(input) {
+	input.setCustomValidity('');
+	if (!input.validity.valid) {
+		input.setCustomValidity('Oops, something\'s not quite right here...');
+	} else {
+		input.setCustomValidity('');
+	}
+}
+</script>
+</head>
+<body>
+<form>
+<label for="foo">An email field</label>
+<input id="foo" name="foo" type="email" oninput="customError(this)">
+<input type="submit" value="submit">
+</form>
+<p>on input, resetting custom validity, checking validity, and if not valid setting custom message again.</p>
+</body>

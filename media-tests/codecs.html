@@ -1,0 +1,21 @@
+﻿<!DOCTYPE html>
+<title>HTML5 video/audio codec test</title>
+<body>
+<h1>HTML5 video/audio codec test</h1>
+<table></table>
+<script>
+window.addEventListener('load',function() {
+	var o = document.getElementsByTagName('table')[0];
+	var v = document.createElement('video');
+	var a = document.createElement('audio');
+	var vc = ['video/webm','video/mp4','video/ogg','video/webm;codecs="vp8,vorbis"','video/mp4;codecs="avc1.42E01E,mp4a.40.2"','video/ogg;codecs="theora,vorbis"'];
+	console.log(o);
+	for (var i=vc.length-1;i>=0;i--) {
+		o.innerHTML += '<tr><td>'+vc[i]+'</td><td>'+(v.canPlayType(vc[i])||'no')+'</td></tr>';
+	}
+	var ac = ['audio/mpeg','audio/mp3','audio/mp4','audio/ogg','audio/wav','audio/aac','audio/webm','audio/mpeg;codecs="mp3"','audio/mp3;codecs="mp3"','audio/mp4;codecs="mp4a.40.5"','audio/ogg;codecs="vorbis"','audio/wav;codecs="1"','audio/aac;codecs="mp4a.40.5"','audio/webm;codecs="vorbis"'];
+	for (i=ac.length-1;i>=0;i--) {
+		o.innerHTML += '<tr><td>'+ac[i]+'</td><td>'+(a.canPlayType(ac[i])||'no')+'</td></tr>';
+	}
+},true);
+</script>

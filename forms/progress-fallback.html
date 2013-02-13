@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<title>progress test</title>
+<script>
+window.addEventListener('load', init, false);
+
+function init() {
+    var start = document.getElementById("start");
+    start.addEventListener("click", function(e) { progress('progress1'); e.preventDefault();}, false);
+}
+
+function progress(prog_id) {
+	var prog = document.getElementById(prog_id);
+	if (parseInt(prog.getAttribute('value')) == parseInt(prog.getAttribute('max'))) {
+		prog.setAttribute('value', 0);
+	}
+	progressticker(prog_id);
+}
+
+function progressticker(prog_id) {
+	var prog = document.getElementById(prog_id);
+	if (parseInt(prog.getAttribute('value')) < parseInt(prog.getAttribute('max'))) {
+		prog.setAttribute('value',parseInt(prog.getAttribute('value'))+10);
+		setTimeout("progressticker('"+prog_id+"')",500);
+		// fallback span
+		prog.getElementsByTagName('span')[0].innerHTML = prog.getAttribute('value');
+	}               
+}
+</script>
+<body>
+	<h1><code>progress</code> test</h1>
+	<form>
+<progress id="progress1" value="0" max="100"><span>0</span>%</progress>
+<button id="start">go</button>
+</form>
+</body>

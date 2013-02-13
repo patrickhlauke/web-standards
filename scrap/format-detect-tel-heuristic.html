@@ -1,0 +1,11 @@
+<!DOCTYPE html>
+<title>Testing format detection suppression with heuristics on tel:</title>
+
+<h1>Testing format detection suppression with heuristics on tel:</h1>
+
+<p>Format detection (UK numbers pipes): +441111234567 | +44(0)1111234567 | +44 (0)1111 234567 | +44 (0) 1111 234567 | 01111234567 | 01111-234567 | 01111 234567 | (01111) 234567</p>
+<p>Format detection (UK numbers alpha): +441111234567 a +44(0)1111234567 b +44 (0)1111 234567 c +44 (0) 1111 234567 d 01111234567 e 01111-234567 f 01111 234567 g (01111) 234567</p>
+<p>Format detection (UK numbers punctuation): +441111234567. +44(0)1111234567, +44 (0)1111 234567; +44 (0) 1111 234567: 01111234567? 01111-234567! 01111 234567- (01111) 234567</p>
+<p>Format detection (UK numbers extra space): +441111234567  +44(0)1111234567  +44 (0)1111 234567  +44 (0) 1111 234567  01111234567  01111-234567  01111 234567  (01111) 234567</p>
+<p>Format detection (UK numbers single space): +441111234567 +44(0)1111234567 +44 (0)1111 234567 +44 (0) 1111 234567 01111234567 01111-234567 01111 234567 (01111) 234567</p>
+<p>One sacrificial <a href="tel:0123456789">tel: link</a> to trip heuristics into NOT doing format detection?</p>

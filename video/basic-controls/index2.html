@@ -1,0 +1,46 @@
+<!doctype html>
+<title>Video test</title>
+
+<style>
+html { background: #eee; }
+body {
+	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+	font-size: 0.9em;
+	line-height: 1.2;
+	color: #222;
+}
+
+a { color: #227; }
+
+pre { border: 1px #ddd solid; background: #FF9; font-size: 1.2em; padding: 1em; }
+
+video { display: block; }
+output { display: block; border: 1px #ddd solid; background: #FF9; font-size: 1.5em; padding: 1em; margin: 1em 0 0 0; }
+</style>
+<body>
+<h1>Video test</h1>
+<p><code>video</code> with <code>webm</code> and <code>mp4</code> sources, with and without <code>type</code> attributes.</p>
+<video controls width="426" height="240">
+	<source src="../videos/fridge.webm" />
+	<source src="../videos/fridge.mp4" />
+</video>
+
+<video controls width="426" height="240">
+	<source src="../videos/fridge.webm" type="video/webm" />
+	<source src="../videos/fridge.mp4" type="video/mp4" />
+</video>
+
+<p><code>video</code> with a single <code>src</code> attribute, no alternative sources. first one with <code>webm</code>, second with <code>mp4</code>.</p>
+
+<video controls width="426" height="240" src="../videos/fridge.webm"></video>
+<video controls width="426" height="240" src="../videos/fridge.mp4"></video>
+
+<output></output>
+<script>
+var o = document.getElementsByTagName('output')[0];
+var video = document.createElement('video');
+o.innerHTML += "<code>video.canPlayType('video/mp4'):</code> "+video.canPlayType('video/mp4')+"<br>";
+o.innerHTML += "<code>video.canPlayType('video/webm'):</code> "+video.canPlayType('video/webm')+"<br>";
+o.innerHTML += "<code>video.canPlayType('video/ogg'):</code> "+video.canPlayType('video/ogg');
+</script>
+</body>

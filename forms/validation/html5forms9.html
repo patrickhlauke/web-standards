@@ -1,0 +1,34 @@
+<!doctype>
+<head>
+<title>HTML5 form validation example - setCustomValidity for more complex validation scenarios using native error messages</title>
+<script>
+function customError(form) {
+	if (parseFloat(form.a.value) + parseFloat(form.b.value) != parseFloat(form.ab.value)) {
+		form.ab.setCustomValidity('That\'s not the total!');
+	} else {
+		form.ab.setCustomValidity('');
+	}
+}
+window.addEventListener('load',function() {
+	var form = document.querySelector('form');
+	// run customError on forminput
+	form.addEventListener('forminput',function(e) {
+		customError(e.target);
+	},false);
+	// run customError for first time even before any input takes place (so if user just hits submit the custom errors already show)
+	customError(form);
+},false);
+</script>
+</head>
+<body>
+<form>
+<label for="a">Enter value a (required)</label>
+<input id="a" name="a" type="number" required>
+<label for="b">Enter value b (required)</label>
+<input id="b" name="b" type="number" required>
+<label for="ab">Enter a+b (required)</label>
+<input id="ab" name="ab" type="number" required>
+<input type="submit" value="submit">
+</form>
+<p>setCustomValidity is good for more than just having your own text appear in the standard error boxes. it can be used to write your own complex constraints (that can't be expressed through even the new types and attributes) and still use the browser's native error messages/handling to display any problems.</p>
+</body>

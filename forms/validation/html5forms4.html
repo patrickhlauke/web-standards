@@ -1,0 +1,22 @@
+<!doctype>
+<head>
+<title>HTML5 form validation example - triggering validation via JavaScript</title>
+<script>
+function validate(input) {
+	input.checkValidity();
+}
+</script>
+</head>
+<body>
+<form>
+<label for="foo1">An email field</label>
+<input id="foo1" name="foo1" type="email" onblur="validate(this)">
+<label for="foo2">A URL field</label>
+<input id="foo2" name="foo2" type="url" onblur="validate(this)">
+<label for="foo3">A number between 1 and 5</label>
+<input id="foo3" name="foo3" type="number" min="1" max="5" onblur="validate(this)">
+<input type="submit" value="submit">
+</form>
+<p>native validation does not have to just happen on submit. we can trigger the browser's validation run directly via JavaScript - here, we do it when a user leaves an input, to provide instant error messages if something wasn't right with the data they just entered. highly annoying and not user-friendly (user is forced to enter valid data before being able to continue with anything else on the page), but demonstrates the point.</p>
+<p>BUG: entering something other than a number won't trigger any error in Opera</p>
+</body>

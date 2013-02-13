@@ -1,0 +1,6 @@
+<!DOCTYPE html>
+<title>Preventing context / hold</title>
+<p>touchstart with preventDefault - touch and hold on this page, no OS/browser default context menu should appear. most other touch-based events (pinch-zoom) should also be suppressed.</p>
+<script>
+document.addEventListener('touchstart',function(e) { e.preventDefault(); }, false);
+</script>

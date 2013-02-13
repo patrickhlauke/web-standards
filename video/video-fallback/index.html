@@ -1,0 +1,25 @@
+<!doctype html>
+<title>Video5 test</title>
+<script src="/patrickl/scripts/ga.js"></script>
+</script>
+<script src="jquery-1.3.2.min.js"></script>
+<script src="videos.js"></script>
+<style>
+video { display: block; }
+</style>
+<body>
+<h1>Video fall-backer test</h1>
+<p>A JavaScript implementation of Camen Design's <a href="http://camendesign.com/code/video_for_everybody"><cite>Video for everybody</cite></a></p>
+<video controls autoplay poster="poster.jpg" width="640" height="360">
+	<source src="big_buck_bunny.ogv" type="video/ogg" />
+    <source src="big_buck_bunny.mp4" type="video/mp4" />
+</video>
+<small>(c) copyright Blender Foundation | <a href="http://www.bigbuckbunny.org">www.bigbuckbunny.org</a></small>
+<h2>Original code in HTML</h2>
+<pre><code>&lt;video controls autoplay poster="poster.jpg" width="640" height="360"&gt;
+    &lt;source src="big_buck_bunny.ogv" type="video/ogg" /&gt;
+    &lt;source src="big_buck_bunny.mp4" type="video/mp4" /&gt;
+&lt;/video&gt;</code></pre>
+<h2>Code inserted by script (only in browsers that don't support <code>video</code>)</h2>
+<pre><code id="code"></code></pre>
+</body>

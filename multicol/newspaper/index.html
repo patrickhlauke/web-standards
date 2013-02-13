@@ -1,0 +1,177 @@
+<!DOCTYPE HTML>
+<html lang="en-US">
+<head>
+	<title>The Multi-Column Digest</title>
+	<meta charset="UTF-8">
+	<style>
+		/* Fonts */
+		@import url(http://fonts.googleapis.com/css?family=PT+Sans:regular,bold&subset=cyrillic,latin);
+		@import url(http://fonts.googleapis.com/css?family=PT+Sans+Narrow:regular,bold&subset=cyrillic,latin);
+		@import url(http://fonts.googleapis.com/css?family=PT+Serif:regular,bold&subset=cyrillic,latin);
+
+		/* Reset */
+		HTML,BODY,DIV,SPAN,APPLET,OBJECT,IFRAME,H1,H2,H3,H4,H5,H6,P,
+		BLOCKQUOTE,PRE,A,ABBR,ACRONYM,ADDRESS,BIG,CITE,CODE,DEL,DFN,
+		EM,FONT,IMG,INS,KBD,Q,S,SAMP,SMALL,STRIKE,STRONG,SUB,SUP,
+		TT,VAR,HR,B,U,I,CENTER,DL,DT,DD,OL,UL,LI,FIELDSET,FORM,
+		LABEL,LEGEND,TABLE,CAPTION,TBODY,TFOOT,THEAD,TR,TH,TD {
+			padding:0;
+			margin:0;
+			border:none;
+			outline:none;
+			vertical-align:baseline;
+			font-family:inherit;
+			font-size:100%;
+			}
+		DFN,I,CITE,VAR,ADDRESS,EM {
+			font-style:normal;
+			}
+		TH,B,STRONG,H1,H2,H3,H4,H5,H6{
+			font-weight:normal;
+			}
+		TEXTAREA,INPUT,SELECT{
+			font-family:inherit;
+			font-size:1em;
+			}
+		BLOCKQUOTE,Q {
+			quotes:none;
+			}
+		Q:before,Q:after,
+		BLOCKQUOTE:before,
+		BLOCKQUOTE:after {
+			content:'';
+			content:none;
+			}
+		OL,UL {
+			list-style:none;
+			}
+		INS {
+			text-decoration:none;
+			}
+		DEL {
+			text-decoration:line-through;
+			}
+		TABLE {
+			border-collapse:collapse;
+			border-spacing:0;
+			}
+		CAPTION,TH,TD {
+			text-align:left;
+			}
+
+		/* Typography */
+		BODY {
+			padding:50px 0;
+			background:#75777E url(images/linen.jpg);
+			color:#000;
+			font:15px 'PT Serif', serif;
+			}
+		SECTION {
+			padding:70px 70px;
+			width:70%;
+			min-width:600px;
+			max-width:1000px;
+			margin:auto;
+			background-color:#FFF;
+			
+			-webkit-box-shadow:0 0 50px rgba(0, 0, 0, 0.5);
+			-moz-box-shadow:0 0 50px rgba(0, 0, 0, 0.5);
+			box-shadow:0 0 50px rgba(0, 0, 0, 0.5);
+			}
+			SECTION > H1 {
+				padding:23px 0 25px 0;
+				border:1px solid #000;
+				border-width:5px 0 3px;
+				color:#000;
+				text-align:center;
+				font:bold 100px/1 'PT Sans Narrow', sans-serif;
+				}
+			SECTION > P {
+				margin:0 0 40px;
+				padding:10px 0;
+				border-bottom:3px double #000;
+				text-align:center;
+				font:bold 15px/1 'PT Sans', sans-serif;
+				}
+			SECTION > ARTICLE {
+				margin:0 0 30px;
+				padding:0 0 10px;
+				border-bottom:3px solid #000;
+				-webkit-column-count:3;
+				-moz-column-count:3;
+				column-count:3;
+				-webkit-column-gap:30px;
+				-moz-column-gap:30px;
+				column-gap:30px;
+				-webkit-column-rule:1px solid #BBB;
+				-moz-column-rule:1px solid #BBB;
+				column-rule:1px solid #BBB;
+				}
+			SECTION > ARTICLE:last-of-type {
+				margin:0;
+				}
+				SECTION > ARTICLE H2 {
+					margin:0 0 15px;
+					padding:0 0 15px;
+					border-bottom:3px double #BBB;
+					font:bold 30px/1 'PT Sans Narrow', sans-serif;
+					}
+				SECTION > ARTICLE P {
+					margin:0 0 15px;
+					}
+				SECTION > ARTICLE P:first-letter {
+					float:left;
+					margin-right:10px;
+					font:bold 30px/1 'PT Sans Narrow', sans-serif;
+					}
+				SECTION > ARTICLE IMG {
+					display:block;
+					margin:0 0 15px;
+					width:100%;
+					}
+				SECTION > ARTICLE ARTICLE {
+					margin:30px 0 0;
+					padding:15px 0 0;
+					border-top:3px double #BBB;
+					column-count:auto;
+					column-span:all;
+					}
+					SECTION > ARTICLE ARTICLE H3 {
+						margin:0 0 15px;
+						font:bold 25px/1 'PT Sans Narrow', sans-serif;
+						}
+	</style>
+</head>
+<body>
+	<section>
+		<h1>The Multi-Column Digest</h1>
+		<p>Pellentesque habitant morbi • Donec dictum egestas risus id mollis nisl iaculis • Cras in vulputate tortor</p>
+		<article>
+			<img src="http://placehold.it/500x300/BBB/AAA&amp;text=Placeholder" alt="Placeholder">
+			<h2>Curabitur feugiat</h2>
+			<p>Pellentesque ultrices rhoncus vestibulum. Suspendisse at magna nunc, a sagittis purus. Nam ut massa nisi, at placerat ipsum. Pellentesque tempor, mi in scelerisque convallis, mi mauris venenatis erat, sit amet aliquam sem eros id mauris. Integer in libero et eros volutpat venenatis. Quisque et magna ante. Suspendisse bibendum blandit massa a tempus. Nunc hendrerit egestas lectus, ac congue nisl ultricies a. Donec nibh velit, bibendum sed sollicitudin at, euismod et ipsum. Nullam ultricies est blandit neque volutpat eget egestas augue adipiscing. Morbi mollis, purus quis adipiscing ullamcorper, dui mauris blandit enim, eget pulvinar lacus enim ac sapien. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam dictum, lorem eget hendrerit dapibus, magna massa aliquet libero, convallis vestibulum augue enim eu metus. Nunc et arcu erat, eu molestie urna. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum eu velit eget orci feugiat volutpat non vel nunc. Maecenas eros lorem, dignissim quis vestibulum et, aliquam quis ipsum.</p>
+			<p>Aliquam erat volutpat. Suspendisse iaculis fermentum neque ut varius. Donec accumsan, libero at semper ullamcorper, tellus felis euismod tellus, vel tempor dolor enim sed justo. In ac ante ut magna vehicula lacinia. Sed eu sem sit amet neque pretium fermentum nec at mauris. Suspendisse at augue ut velit blandit hendrerit. Vivamus congue dapibus neque vel interdum. Aliquam erat volutpat. Aliquam lobortis pharetra blandit. Morbi elementum sollicitudin enim at sodales. Proin congue posuere est quis semper. Etiam porta lectus non odio suscipit posuere eget vitae mi. Nullam justo ipsum, consequat quis feugiat sit amet, dapibus eget urna. Praesent vel ultrices mauris. Maecenas viverra ipsum eu neque rutrum consequat. Proin mattis orci eu nibh aliquet non tempor neque pharetra.</p>
+			<p>Ut vehicula magna ac erat accumsan pharetra quis non mauris. Vestibulum sit amet eros eleifend eros vehicula mattis. Maecenas purus urna, rutrum eget convallis sed, aliquam id diam. Donec risus nunc, hendrerit porttitor mattis at, consectetur sed metus. Pellentesque dignissim congue tortor id tincidunt. Vestibulum dapibus mauris eget lacus bibendum luctus. Praesent mauris lorem, auctor sed ornare in, congue at odio. Ut tempor velit ac nisi semper nec egestas sem ultrices. Donec lobortis iaculis tellus, ac rutrum sapien sodales eget. Praesent nec est quis dolor dictum mattis nec quis tellus. Proin bibendum nulla accumsan risus faucibus ac tristique turpis dignissim. Duis neque elit, auctor eget elementum sit amet, feugiat ut tortor. Nam convallis viverra posuere. Vestibulum imperdiet odio sed neque laoreet accumsan. Pellentesque a nisl enim. Morbi felis lacus, tempus lobortis venenatis a, tincidunt eu leo. Pellentesque faucibus iaculis tellus a vestibulum.</p>
+			<img src="http://placehold.it/500x300/BBB/AAA&amp;text=Placeholder" alt="Placeholder">
+			<article>
+				<h3>Suspendisse sed sapien odio, id ultrices nulla</h3>
+				<p>Praesent lobortis pulvinar placerat. Suspendisse vel tellus id tellus pulvinar ultrices a et neque. Cras a erat quam. Aenean vulputate bibendum varius. Donec tempor sagittis erat ac fermentum. Proin libero enim, volutpat at fermentum non, dignissim ac mauris. Quisque dictum, augue a suscipit convallis, dolor velit faucibus tortor, vitae pulvinar tortor velit vel lectus. Integer sed venenatis magna. Quisque sapien tellus, porta tincidunt hendrerit non, auctor eget sapien. In aliquam, leo faucibus ultricies vulputate, neque justo viverra augue, at vulputate massa mi vitae orci. Morbi ultricies laoreet feugiat. Proin suscipit pellentesque erat quis fermentum. Nam ullamcorper turpis sed lorem luctus facilisis. Duis convallis, mauris eu posuere gravida, nisi magna imperdiet ipsum, nec cursus est ipsum sit amet tellus. Proin vel urna a neque tristique facilisis. Nam eget nisl leo.</p>
+			</article>
+		</article>
+		<article>
+			<img src="http://placehold.it/500x300/BBB/AAA&amp;text=Placeholder" alt="Placeholder">
+			<h2>Cras lacus sapien</h2>
+			<p>Aenean ut nunc id odio aliquet euismod. Donec ultrices lectus sit amet purus pharetra feugiat. Maecenas et felis at elit vulputate posuere eget non nibh. Mauris ut erat diam, et blandit lacus. In at massa eros. Morbi sed lectus quam. Nam placerat tempus nibh, sed tempus arcu pharetra vitae. Sed vitae neque ante. Nam felis nisl, feugiat volutpat vehicula ac, pulvinar a odio. Mauris non feugiat justo. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Nullam ornare metus vel lorem pulvinar venenatis. Phasellus consequat vulputate urna vel venenatis. Duis vel vehicula erat.</p>
+			<p>Nunc et risus nulla, vel luctus tellus. Curabitur ac nibh neque, id pellentesque nisi. Pellentesque quis libero at elit vehicula pulvinar id vel dolor. Nam bibendum lacus a leo dictum venenatis. Sed nibh risus, commodo imperdiet luctus quis, eleifend non sem. Donec elementum tempor orci, eget commodo erat gravida ut. Pellentesque sem est, lacinia eget aliquam sed, laoreet ut odio. Vivamus ac quam a dolor facilisis consectetur eget quis ante. Nam vel velit purus. Quisque auctor sem turpis. Vestibulum porta ullamcorper condimentum. Etiam dolor urna, dignissim non imperdiet quis, varius vel sem. Vivamus metus augue, egestas eget aliquet sed, placerat a augue. Pellentesque augue nisl, iaculis ut ornare quis, commodo a diam. Pellentesque aliquet luctus erat, ut egestas nisl feugiat nec. Quisque id risus leo, ac dignissim justo. Cras semper odio vitae arcu lacinia sit amet aliquam nibh imperdiet. Sed eleifend purus in turpis vehicula id dapibus lectus aliquet. Proin bibendum scelerisque lectus, quis posuere risus auctor ut. Nullam id pretium dui.</p>
+			<p>Quisque porttitor tincidunt magna molestie facilisis. Curabitur tristique condimentum ante, at tempor est molestie eu. Sed ut felis et erat vulputate semper et ac ante. Maecenas sit amet libero nulla. Aliquam condimentum, ligula a vestibulum eleifend, velit nulla tincidunt risus, sed pulvinar felis felis in neque. Nunc ut nulla facilisis erat blandit egestas eu congue justo. Nullam sagittis egestas elit, in mattis sem lobortis eu. Morbi pulvinar, justo quis aliquam ornare, justo sem faucibus purus, faucibus ornare metus dolor eu est. Nam et lacus nunc, in ultrices libero. Pellentesque scelerisque est ut velit posuere scelerisque. Aliquam erat volutpat. Ut eu dignissim orci. Aenean non enim eget dui tempus accumsan. Donec tristique, sapien nec aliquam dapibus, mauris ligula elementum velit, sit amet hendrerit lacus neque a nunc. Cras sodales tincidunt risus eu facilisis. Nulla nisl ante, feugiat ac commodo nec, vestibulum vel metus.</p>
+			<p>Integer blandit ultricies nunc quis cursus. Aenean gravida commodo erat eget tempor. Vivamus id diam quis dolor tincidunt bibendum nec quis lectus. Vestibulum a leo odio, eget pretium metus. Ut euismod sagittis nibh, vitae ullamcorper urna viverra sed. Sed mi felis, pulvinar et tristique ut, tempor ac odio. Curabitur eu porta dolor. Etiam fermentum vehicula ligula, in ultrices ante rhoncus tristique. Vivamus sodales ornare nulla vitae condimentum. Curabitur vel dui vel risus sodales pulvinar at at enim. Nulla et eros ut ipsum pretium euismod sed a odio. Donec eu lorem erat. Praesent vel hendrerit turpis.</p>
+			<article>
+				<h3>Curabitur malesuada nunc in leo iaculis eget molestie</h3>
+				<p>Integer porttitor commodo lorem sit amet adipiscing. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed eget gravida ligula. Curabitur malesuada nunc in leo iaculis eget molestie purus malesuada. Donec pulvinar nulla aliquet elit iaculis vestibulum. Nullam vitae dignissim risus. Suspendisse potenti. Pellentesque ut libero eget purus ornare porta non non arcu. Nulla congue pellentesque risus ac suscipit. Sed pulvinar consectetur tempus. Cras lacus sapien, accumsan a auctor at, lacinia ut diam. In faucibus cursus turpis, id malesuada nulla vestibulum non. Quisque elit elit, imperdiet ac imperdiet quis, consectetur a dolor. Phasellus tristique venenatis diam, nec venenatis sapien consequat id. Sed et magna lacus.</p>
+			</article>
+		</article>
+	</section>
+	<!-- Author: Vadim Makeev, http://pepelsbey.net/ -->
+	<!-- modified by Patrick H. Lauke - removed gradients to just showcase multicol -->
+</body>
+</html>

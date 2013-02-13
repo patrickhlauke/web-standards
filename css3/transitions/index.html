@@ -1,0 +1,56 @@
+<!doctype html>
+<html>
+<head>
+<title>CSS3 Transitions</title>
+<style>
+body { padding: 0 2em; }
+pre { border: 1px #ddd solid; background: #FF9; font-size: 1.2em; padding: 1em; }
+small { display: block; }
+
+ul { height: 150px; margin-top: 50px; margin: 0; padding: 0; }
+li { display: block; float: left; height: 150px; margin: 0; padding: 0; }
+li a { display: block; float: left; height: 75px; padding-top: 75px; -o-transition: all 0.3s ease-in-out; -webkit-transition: all 0.3s ease-in-out; -moz-transition: all 0.3s ease-in-out; transition: all 0.3s ease-in-out; }
+li a:focus, li a:hover { height: 150px; padding-top: 0px; outline: 1px solid rgba(0,0,0,0); }
+li a img { width: 75px; height: 75px; -o-transition: all 0.3s ease-in-out; -webkit-transition: all 0.3s ease-in-out; -moz-transition: all 0.3s ease-in-out; transition: all 0.3s ease-in-out; }
+li a:focus img, li a:hover img { width: 150px; height: 150px; }
+</style>
+<script src="/patrickl/scripts/ga.js"></script>
+</head>
+<body>
+<h1>CSS3 Transitions</h1>
+<p>Using <a href="http://www.w3.org/TR/css3-transitions/"><code>transition</code></a> for <code>:focus</code> and <code>:hover</code> effects. <small>This demo uses <abbr title="Scalable Vector Graphics">SVG</abbr> images, which at this stage are not supported in all browsers.</small></p>
+<ul>
+<li><a href="#"><img src="./svg/computer.svg" width="75" height="75" alt="My Computer" /></a></li>
+<li><a href="#"><img src="./svg/hd.svg" width="75" height="75" alt="Harddrive" /></a></li>
+<li><a href="#"><img src="./svg/cdrom.svg" width="75" height="75" alt="CD-ROM" /></a></li>
+<li><a href="#"><img src="./svg/music.svg" width="75" height="75" alt="Music" /></a></li>
+<li><a href="#"><img src="./svg/globe.svg" width="75" height="75" alt="Internet" /></a></li>
+<li><a href="#"><img src="./svg/thumb.svg" width="75" height="75" alt="Photos" /></a></li>
+</ul>
+<pre><code>
+a { ...
+    height: 75px;
+    padding-top: 75px;
+    <strong>-o-transition: all 0.3s ease-in-out;</strong>
+    ...
+}
+
+a:focus, a:hover {
+    height: 150px;
+    padding-top: 0px;
+}
+
+a img {
+    width: 75px;
+    height: 75px;
+    <strong>-o-transition: all 0.3s ease-in-out;</strong>
+    ...
+}
+
+a:focus img, a:hover img {
+    width: 150px;
+    height: 150px;
+}
+</code></pre>
+</body>
+</html>

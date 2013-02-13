@@ -1,0 +1,16 @@
+﻿<!doctype html>
+<title>Mandelbrot</title>
+<style>canvas { cursor:crosshair;border:1px #999 solid; }</style>
+<script src="/patrickl/scripts/ga.js"></script>
+<canvas id=a width=500 height=500></canvas>
+<label for="detail">Detail (fine-coarse)</label>
+<input type=range min=1 max=10 id=detail onchange="detail=Math.floor(this.value);draw_brot(detail)">
+<button onclick=init()>reset</button>
+<script>
+/* adapted from http://plus.maths.org/content/computing-mandelbrot-set */
+var c=document.getElementById('a'),ctx=c.getContext('2d'),w=c.width,h=c.height,cx,cy,scale,limit,lp,a1,b1,a2,b2,x,y,ax,ay,detail,working;
+function draw_brot(d){ working+=1;for (x=-(w/2); x<(w/2); x+=d) { for (y=-(h/2); y<(h/2); y+=d) { ax=cx+x*scale; ay=cy+y*scale; a1=ax; b1=ay; lp=0; do { lp=lp+1; a2=a1*a1-b1*b1+ax; b2=2*a1*b1+ay; a1=a2; b1=b2; } while (!((lp>255)||((a1*a1)+(b1*b1)>limit))); if (lp>255) { ctx.fillStyle = "hsl(0,0%,0%)"; } else { ctx.fillStyle = "hsl("+lp+",100%,50%)"; } ctx.fillRect(x+(w/2),y+(h/2),d,d); } } working-=1; }
+function clicky(e){if(working==0){cx=cx+scale*(e.x-(w/2));cy=cy+scale*(e.y-(h/2));scale=scale/2;draw_brot(50);setTimeout("draw_brot(detail)",1);}}
+function init(){cx=-0.8;cy=0;scale=0.005;limit=4;detail=2;draw_brot(detail);}
+c.addEventListener("click",clicky,true);init();
+</script>

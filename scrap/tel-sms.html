@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<title>Testing tel: and sms: links</title>
+
+<h1>Testing tel: and sms: links</h1>
+<dl>
+<dt>simple tel: link</dt>
+<dd><a href="tel:+441111234567">tel:+441111234567</a></dd>
+<dt>simple sms: link</dt>
+<dd><a href="sms:+441111234567">sms:+441111234567</a></dd>
+<dt>sms: with ?body=</dt>
+<dd><a href="sms:+441111234567?body=Text%20me">sms:+441111234567?body=Text%20me</a></dd>
+<dt>sms: with multiple numbers</dt>
+<dd><a href="sms:+441111234567,+441111678901">sms:+441111234567,+441111678901</a></dd>
+<dt>sms: with multiple numbers and ?body=</dt>
+<dd><a href="sms:+441111234567,+441111678901?body=Text%20me">sms:+441111234567,+441111678901?body=Text%20me</a></dd>
+</dl>
+<p>See <a href="http://tools.ietf.org/html/rfc3966">RFC3966 (TEL)</a> and <a href="http://tools.ietf.org/html/rfc5724">RFC5724 (SMS)</a></p>

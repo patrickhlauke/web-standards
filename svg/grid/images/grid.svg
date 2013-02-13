@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<svg version="1.1" xmlns="http://www.w3.org/2000/svg">
+
+	<!-- lines for regular grid. Change second value of dasharray for bigger cells and first value for thicker lines. Remember the line takes up a pixel so calculate that in -->
+	<line id="line_vertical" x1="0" y1="4200" x2="4200" y2="4200" stroke-width="12000" stroke="dimgrey" stroke-opacity="0.2" stroke-dasharray="1 9" />
+	<line id="line_horizontal" x1="4200" y1="0" x2="4200" y2="10000" stroke-width="12000" stroke="dimgrey" stroke-opacity="0.2"  stroke-dasharray="1 9" />
+	
+	<!-- lines for super grid -->
+	<line id="line_vertical_thick" x1="0" y1="4200" x2="4200" y2="4200" stroke-width="12000" stroke="dimgrey" stroke-opacity="0.3" stroke-dasharray="1 49" />
+	<line id="line_horizontal_thick" x1="4200" y1="0" x2="4200" y2="10000" stroke-width="12000" stroke="dimgrey" stroke-opacity="0.3"  stroke-dasharray="1 49" />
+</svg>

@@ -1,0 +1,251 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+<title>Face tracking and Three.js</title>
+<meta charset="utf-8">
+<style type="text/css">
+body {
+background-color: #112;
+margin: 0px;
+overflow: hidden;
+}
+</style>
+<script type="text/javascript" src="./libs/ThreeIncludes.js"></script>
+<script type="text/javascript" src="js/ccv.js"></script>
+<script type="text/javascript" src="js/face.js"></script>
+<script type="text/javascript">
+// Three.js example setup
+
+var container, stats, mouseX = 0, mouseY = 0;
+
+var camera, scene, renderer;
+
+var primitive;
+
+var windowHalfX = window.innerWidth / 2;
+var windowHalfY = window.innerHeight / 2;
+
+var rotationX=0 , rotationY = 0,targetRotationX=0 , targetRotationY = 0; 
+
+// Face detection setup
+
+var videoInput = document.createElement('video'); videoInput.autoplay = true;
+
+var compareScale = 2; // make smaller for smoother performance
+var compareCanvas, compareCtx;
+var canvasCleaner;
+
+var offsetH, offsetV;
+
+var detector;
+var detectionInterval = 1000/60; // make larger for smoother performance
+
+function detectFace() {
+	function complete(comp) {
+		
+		// mark detected face(s)
+		if (comp.length>0) {
+		// only detecting one face
+			var x = (comp[0].x+comp[0].width/2);
+			var y = (comp[0].y+comp[0].height/2);
+			mouseX = ((compareCanvas.width/2-x)/compareCanvas.width)*window.innerWidth;
+			mouseY = ((y-compareCanvas.height/2)/compareCanvas.height)*window.innerHeight;
+
+		}
+		// Re-schedule detectFace process
+		detector = window.setTimeout(detectFace, detectionInterval);	
+	}
+		
+	// Copy videoInput to compareCanvas
+	compareCtx.drawImage(videoInput, 0, 0, compareCanvas.width, compareCanvas.height);
+
+	function doDetection() {
+		// Synchronous processing method				
+		var comp = ccv.detect_objects({ "canvas" : ccv.grayscale(ccv.pre(compareCanvas)),
+							 "cascade" : cascade,
+							 "interval" : 5,
+							 "min_neighbors" : 1 /*,
+							 "async" : true,
+							 "worker" : 1*/ });
+		complete(comp);
+	}
+
+	try {
+		doDetection();
+	} catch(e) {
+		videoInput.pause(); 
+		alert('Face detection failed indefinitely :( Please reload the page.');
+	}
+
+}
+
+function init() {
+
+	// Three.js scene etup
+
+	container = document.createElement( 'div' );
+	document.body.appendChild( container );
+
+	camera = new THREE.Camera( 50, window.innerWidth / window.innerHeight, 1, 2000 );
+	camera.position.z = 1000;
+	
+	scene = new THREE.Scene();
+		var program = function ( context ) {
+
+			context.beginPath();
+			context.arc( 0, 0, 1, 0, Math.PI*2, true );
+			context.closePath();
+			context.fill();
+
+		}
+		
+		var materials = [];
+		for ( var i = 0; i < 6; i ++ ) {
+			materials.push( new THREE.MeshBasicMaterial( { color:  0xff * Math.random() << 8 } ) );
+		}
+		
+		for ( var i = 0; i < 5; i++ ) {
+
+			var material = new THREE.MeshLambertMaterial( { color: 0xff0000, shading: THREE.FlatShading });
+			
+			var geom = new THREE.CubeGeometry( 200, 200, 200, 1, 1, 1, materials);
+			
+
+			primitive = new THREE.Mesh(geom, material);
+			
+			primitive.position.x = Math.random() * 600 - 300;
+			primitive.position.y = Math.random() * 600 - 300;
+			primitive.position.z = Math.random() * 600 - 300;
+			
+			scene.addObject( primitive );
+		}
+	
+		var ambient = new THREE.AmbientLight( 0x222222 );
+		scene.addLight( ambient );
+
+		directionalLight = new THREE.DirectionalLight( 0xcccccc );
+		directionalLight.position.x = 70;
+		directionalLight.position.y = 70;
+		directionalLight.position.z = 100;
+		directionalLight.position.normalize();
+		scene.addLight( directionalLight );
+		
+		directionalLight = new THREE.DirectionalLight( 0x666666 );
+		directionalLight.position.x = -70;
+		directionalLight.position.y = -70;
+		directionalLight.position.z = -30;
+		directionalLight.position.normalize();
+		scene.addLight( directionalLight );
+	
+
+	
+
+	// renderer = new THREE.CanvasRenderer();
+	renderer = new THREE.WebGLRenderer();
+	renderer.setSize(  window.innerWidth, window.innerHeight );
+
+	container.appendChild( renderer.domElement );
+	
+	setInterval(loop, detectionInterval);
+	
+	// face detection setup
+	
+	videoInput.addEventListener('playing', function() {
+		if(videoInput.width > videoInput.height) {
+			videoInput.width = 320;
+		} else {
+			videoInput.height = 240;
+		}
+		
+		compareCanvas = document.createElement('canvas');
+		compareCanvas.width = videoInput.videoWidth/compareScale;
+		compareCanvas.height = videoInput.videoHeight/compareScale;
+		compareCtx = compareCanvas.getContext("2d");
+
+	},false);
+	
+	if(window.navigator.getUserMedia) {
+		window.navigator.getUserMedia({video: true}, function( stream ) {
+				videoInput.src = stream;
+				detector = window.setTimeout(detectFace, detectionInterval);
+		});
+	} else {
+		// fail
+	}
+
+
+}
+
+
+//
+
+function loop() {
+	
+	targetRotationY = mouseX*0.3; 
+	targetRotationX = mouseY*-0.4; 
+	
+	if(targetRotationX>90) targetRotationX = 90; 
+	else if(targetRotationX<-90) targetRotationX = -90; 
+	
+	rotationX += (targetRotationX-rotationX)*0.7; 	 // smoothing movements
+	rotationY += (targetRotationY-rotationY)*0.7; 
+	
+	camera.position.set(0,0,1000); 
+	camera.position.rotateX(rotationX); 
+	camera.position.rotateY(rotationY); 
+
+	renderer.render(scene, camera);
+
+}
+
+
+TO_RADIANS = Math.PI/180; 
+
+THREE.Vector3.prototype.rotateY = function(angle){
+
+	cosRY = Math.cos(angle * TO_RADIANS);
+	sinRY = Math.sin(angle * TO_RADIANS);
+
+	var tempz = this.z;; 
+	var tempx = this.x; 
+
+	this.x= (tempx*cosRY)+(tempz*sinRY);
+	this.z= (tempx*-sinRY)+(tempz*cosRY);
+
+
+};
+
+THREE.Vector3.prototype.rotateX = function(angle){
+
+	cosRY = Math.cos(angle * TO_RADIANS);
+	sinRY = Math.sin(angle * TO_RADIANS);
+
+	var tempz = this.z;; 
+	var tempy = this.y; 
+
+	this.y= (tempy*cosRY)+(tempz*sinRY);
+	this.z= (tempy*-sinRY)+(tempz*cosRY);
+
+
+};
+
+THREE.Vector3.prototype.rotateZ = function(angle){
+
+	cosRY = Math.cos(angle * TO_RADIANS);
+	sinRY = Math.sin(angle * TO_RADIANS);
+
+	var tempx = this.x;; 
+	var tempy = this.y; 
+
+	this.y= (tempy*cosRY)+(tempx*sinRY);
+	this.x= (tempy*-sinRY)+(tempx*cosRY);
+
+
+};
+
+window.addEventListener('load',init,false);
+</script>
+</head>
+<body>
+</body>
+</html>

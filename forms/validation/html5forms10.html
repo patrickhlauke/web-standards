@@ -1,0 +1,54 @@
+<!doctype>
+<head>
+<title>HTML5 form validation example - validty object used for custom error handling</title>
+<script>
+function customError(form) {
+	var fields = form.querySelectorAll('input,select,textarea');
+	var output = document.getElementById('errors');
+	output.innerHTML = '';
+	var goodToGo = true;
+	for(var i=0; fields[i]; i++) {
+		if (!fields[i].validity.valid) {
+			goodToGo = false;
+			output.innerHTML += fields[i].name+': '
+			if (fields[i].validity.valueMissing) {
+				output.innerHTML += 'value missing<br>';
+			}
+			if (fields[i].validity.typeMismatch) {
+				output.innerHTML += 'type mismatch<br>';
+			}
+			if (fields[i].validity.patternMismatch) {
+				output.innerHTML += 'pattern mismatch<br>';		
+			}
+			if (fields[i].validity.tooLong) {
+				output.innerHTML += 'too long<br>';
+			}
+			if (fields[i].validity.rangeUnderflow) {
+				output.innerHTML += 'range underflow<br>';
+			}
+			if (fields[i].validity.rangeOverflow) {
+				output.innerHTML += 'range overflow<br>';
+			}
+			if (fields[i].validity.stepMismatch) {
+				output.innerHTML += 'step mismatch<br>';
+			}
+			if (fields[i].validity.customError) {
+				output.innerHTML += 'custom error<br>';
+			}
+		}
+	}
+	return goodToGo;
+}
+</script>
+</head>
+<body>
+<form onsubmit="return customError(this)" novalidate>
+<label for="foo">A required email field</label>
+<input id="foo" name="foo" type="email" required>
+<label for="bar">A required textarea</label>
+<textarea id="bar" name="bar" required></textarea>
+<input type="submit" value="submit">
+</form>
+<output id="errors"></output>
+<p>suppressing native validation on submission with <code>novalidate</code>, but still using the <code>validity</code> object for each form field to do custom JavaScript validation on submit - using the browser's built-in validation capability but providing your own error messages. HERE WE *CAN* RUN IT ONSUBMIT, AS WE'RE SUPPRESSING NATIVE VALIDATION SO WE'RE SURE IT FIRES AT THE RIGHT TIME AND CAN STOP SUBMISSION AS WELL.</p>
+</body>

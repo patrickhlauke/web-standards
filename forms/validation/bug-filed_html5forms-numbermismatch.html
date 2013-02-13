@@ -1,0 +1,12 @@
+<!doctype>
+<head>
+<title>HTML5 form validation example - number input mismatch</title>
+</head>
+<body>
+<form>
+<label for="foo3">A number between 1 and 5</label>
+<input id="foo3" name="foo3" type="number" min="1" max="5">
+<input type="submit" value="submit">
+</form>
+<p>Entering a number, the validation (regarding min/max) works as expected. However, if I type in text, or some random characters, no error comes up. Should it trigger a type mismatch if the browser doesn't recognise it as a number?</p>
+</body>

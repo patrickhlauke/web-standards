@@ -1,0 +1,33 @@
+<!doctype html>
+<title>Video with external controls</title>
+<style>
+html { background: #eee; }
+body {
+	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+	font-size: 0.9em;
+	line-height: 1.2;
+	color: #222;
+}
+
+a { color: #227; }
+
+pre { border: 1px #ddd solid; background: #FF9; font-size: 1.2em; padding: 1em; }
+
+video { display: block; border: 1px #999 solid; background: #fcc; }
+</style>
+<body>
+<h1>Video letterboxing</h1>
+<p>If video file and video element's dimensions don't have same aspect ratio, browsers letterbox, rather than stretch.</p>
+
+<video controls width="450" height="335" id="player">
+	<source src="../videos/fridge.webm" type="video/webm" />
+	<source src="../videos/fridge.ogv" type="video/ogg" />
+	<source src="../videos/fridge.mp4" type="video/mp4" />
+	<p>Download the video in <a href="../videos/fridge.webm">WebM</a>, <a href="../videos/fridge.ogv">Ogg</a> or <a href="../videos/fridge.mp4">MP4</a> format.</p>
+</video>
+
+<p>Video file is <code>426x240px</code>, approximately 16:9 ratio. Video element is set to <code>450x335px</code>, approximately 4:3 ratio. In this case, the video is scaled to fill the width, and then letterboxed top and bottom. The letterboxed areas use whatever background applies to <code>video</code> according to CSS (transparent by default).</p>
+
+<pre><code>video { display: block; border: 1px #999 solid; background: #fcc; }</code></pre>
+
+</body>

@@ -1,0 +1,37 @@
+<!doctype html>
+<title>border-radius demo</title>
+<style>
+#demo { background: #f00; color: #fff; padding: 20px; width: 300px; min-height: 100px; border-radius: 0; }
+#css {width: 30em; font-size: 1.5em; background: #ff9; color: #000; }
+</style>
+<script src="/patrickl/scripts/ga.js"></script>
+<script>
+var tl=tr=bl=br=0;
+function updateStyle() {
+	style='border-radius: '+tl+'px '+tr+'px '+bl+'px '+br+'px;';
+	document.getElementById('demo').style=style;
+	document.getElementById('css').value=style;
+}
+</script>
+<body>
+<fieldset id="ftl">
+<input type="range" id="tl" min="0" max="50" value="0" onChange="document.getElementById('tl-txt').value=this.value;tl=this.value;updateStyle();">
+<input type="number" min="0" max="50" id="tl-txt" value="0" size="3" onBlur="document.getElementById('tl').value=this.value;tl=this.value;updateStyle();">
+</fieldset>
+<fieldset id="ftr">
+<input type="range" id="tr" min="0" max="50" value="0" onChange="document.getElementById('tr-txt').value=this.value;tr=this.value;updateStyle();">
+<input type="number" min="0" max="50" id="tr-txt" value="0" size="3" onBlur="document.getElementById('tr').value=this.value;tr=this.value;updateStyle();">
+</fieldset>
+<fieldset id="fbl">
+<input type="range" id="bl" min="0" max="50" value="0" onChange="document.getElementById('bl-txt').value=this.value;bl=this.value;updateStyle();">
+<input type="number" min="0" max="50" id="bl-txt" value="0" size="3" onBlur="document.getElementById('bl').value=this.value;bl=this.value;updateStyle();">
+</fieldset>
+<fieldset id="fbr">
+<input type="range" id="br" min="0" max="50" value="0" onChange="document.getElementById('br-txt').value=this.value;br=this.value;updateStyle();">
+<input type="number" min="0" max="50" id="br-txt" value="0" size="3" onBlur="document.getElementById('br').value=this.value;br=this.value;updateStyle();">
+</fieldset>
+<div id="demo">border-radius demo</div>
+<h2>CSS</h2>
+<input type="text" readonly id="css">
+
+</body>

@@ -1,0 +1,29 @@
+<!doctype>
+<head>
+<title>HTML5 form validation example - setCustomValidity messages</title>
+<script>
+function customError(form) {
+alert('foo');
+	var fields = form.querySelectorAll('input,select,textarea');
+	for(var i=0; fields[i]; i++) {
+		fields[i].setCustomValidity('');
+		if (!fields[i].validity.valid) {
+			fields[i].setCustomValidity('Oops, something\'s not quite right here...');
+		} else {
+			fields[i].setCustomValidity('');
+		}
+	}
+}
+</script>
+</head>
+<body>
+<form onsubmit="customError(this)">
+<label for="foo">An email field</label>
+<input id="foo" name="foo" type="email">
+<label for="bar">A required textarea</label>
+<textarea id="bar" name="bar" required></textarea>
+<input type="submit" value="submit">
+</form>
+<p>doing a customValidity run before entire form submits WRONG SUBMIT FIRES AFTER VALIDATION! CHANGE!</p>
+<p>BUG: first, the browser runs its native validation, THEN it fires the event attached to the submit event. Opera currently gets it wrong and fires it before the browser's own validation run, but we're wrong!</p>
+</body>

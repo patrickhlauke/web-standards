@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+<meta charset=utf-8>
+<title>HTML5 forms: validation</title>
+<script src="/patrickl/scripts/ga.js"></script>
+<style>
+html {
+	font-family:Verdana;
+	font-size:1em; max-width: 50em;
+}
+
+input,select,textarea { font-size: 1em; }
+
+pre { padding:1em; border: 1px #ddd solid; background: #FF9; }
+code { font-family:Courier New, Courier, monospace; font-size:1em; }
+h1 {
+	color:#5999DE;
+}
+form {
+	font:100% Lucinda Grande, Sans-serif;
+	margin: 0;
+	padding: 0;	
+	width: 90%;
+	padding: 10px;
+}
+input {
+	margin-bottom:1em; display:table-row;
+}
+label {
+	color:#666666;
+display:table-cell;
+	text-align: right;
+}
+input, textarea {
+	margin-left:10px;
+	display:table-cell;
+}
+.button {
+	padding-left:140px;
+	padding-bottom:5px;
+	padding-top:5px;
+}
+input:required:invalid {
+border: 5px red solid;
+}
+input:required:valid {
+border: 5px green solid;
+}
+
+</style>
+
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+</head><body>
+
+
+<h1>HTML5 forms: validation</h1>
+<form onsubmit="this.checkValidity();return false;">
+
+<label for="foo3">url</label>
+<input type="url" name="foo3" id="foo3" required>
+
+<pre><code>
+&lt;input [...] <strong>type="url"</strong>&gt;
+</code></pre>
+
+<label for="foo4">email</label>
+<input type="email" placeholder="john@example.net" required name="foo4" id="foo4">
+
+<pre><code>
+&lt;input [...] <strong>type="email"</strong>&gt;
+</code></pre>
+
+<label for="foo15">text with regexp <code>[a-z]{3}[0-9]{3}</code></label>
+<input id="foo15" name="part" pattern="[a-z]{3}[0-9]{3}" required 
+        placeholder="Three letters and three digits"> 
+
+<pre><code>
+&lt;input [...] <strong>patterns="[a-z]{3}[0-9]{3}"</strong>&gt;
+</code></pre>
+
+<input type="submit" value="submit">
+
+<pre><code>
+input:required { ... } input:invalid { ... } input:valid { ... }
+</code></pre>
+
+</form>
+</body>
+</html>

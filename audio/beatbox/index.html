@@ -1,0 +1,38 @@
+﻿<!DOCTYPE html>
+<head>
+<title>Human beatbox...</title>
+<meta name="viewport" content="width=500px">
+<script>
+function sound(s) {
+    if (s != null) {
+	  document.getElementById(s).currentTime=0;
+	  document.getElementById(s).play();
+    }
+}
+window.addEventListener('load',function() { var a = document.getElementsByTagName('audio'); for(i=0; i < a.length; i++) { a[i].pause(); }})
+</script>
+<style>
+audio { display: block; }
+button { display: block; float: left; width:15em; height:15em;}
+</style>
+</head>
+
+<body>
+<p>Made the audio elements visible to clarify what's happening. Without controls they'd be invisible, which is what we actually want here.</p>
+<audio id=bass controls>
+	<source src="sounds/bass.mp3" type="audio/mpeg" />
+	<source src="sounds/bass.ogg" type="audio/ogg" />
+</audio>
+<audio id=hihat controls>
+	<source src="sounds/hihat.mp3" type="audio/mpeg" />
+	<source src="sounds/hihat.ogg" type="audio/ogg" />
+</audio>
+<audio id=snare controls>
+	<source src="sounds/snare.mp3" type="audio/mpeg" />
+	<source src="sounds/snare.ogg" type="audio/ogg" />
+</audio>
+<button ontouchstart="sound('bass');">bass</button>
+<button ontouchstart="sound('hihat')">hihat</button>
+<button ontouchstart="sound('snare')">snare</button>
+<output></output>
+</body>

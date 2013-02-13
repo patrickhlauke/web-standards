@@ -1,0 +1,33 @@
+﻿<!DOCTYPE html>
+<title>Video switching based on media query</title>
+<style>
+html { background: #eee url(pixel-grid.png); }
+body {
+	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+	font-size: 0.9em;
+	line-height: 1.2;
+	color: #222;
+}
+h1 { color: #cc0f16; }
+a { color: #227; }
+
+pre { border: 1px #ddd solid; background: #FF9; font-size: 0.75em; padding: 0.5em; }
+
+video { display: block; max-width: 100%; margin-bottom: 1em; }
+section { background: rgba(255,255,255,0.9); padding: 1em; border-radius: 5px; border: 1px #aaa solid; }
+</style>
+<meta name="viewport" content="width=device-width">
+<h1>Video switching based on media query</h1>
+<video width="426" height="240" controls id="player">
+	<source src="../videos/garden2.mp4" type="video/mp4" media="(min-width:1000px)">
+	<source src="../videos/garden1.mp4" type="video/mp4" media="(max-width:1000px)">
+	<source src="../videos/garden2.webm" type="video/webm" media="(min-width:1000px)">
+	<source src="../videos/garden1.webm" type="video/webm" media="(max-width:1000px)">
+	<source src="../videos/garden2.ogg" type="video/ogg" media="(min-width:1000px)">
+	<source src="../videos/garden1.ogg" type="video/ogg" media="(max-width:1000px)">
+</video>
+<section>
+<pre><code>&lt;source … media="(min-width:1000px)">
+&lt;source … media="(max-width:1000px)"></code></pre>
+<p>On devices and browser windows with a width larger than <code>1000px</code> you'll see the video with a red plant. Otherwise, for smaller devices, a yellow plant.</p>
+</section>

@@ -1,0 +1,13 @@
+<!doctype>
+<head>
+<title>HTML5 form validation example - formnovalidate on submit button</title>
+</head>
+<body>
+<form>
+<label for="foo">A required field</label>
+<input id="foo" name="foo" type="text" required>
+<input type="submit" name="submit" value="submit">
+<input type="submit" name="save" formnovalidate value="save for later">
+</form>
+<p>submitting the form triggers validation. the separate "save" button submits the form while also preventing validation thanks to <code>formnovalidate</code>.</p>
+</body>

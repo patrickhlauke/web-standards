@@ -1,0 +1,16 @@
+﻿html, body { background: #ddd; color: #333; }
+body {
+	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+	font-size: 0.9em;
+	line-height: 1.2;
+	padding: 0 25px;
+	width: 500px;
+}
+
+p { margin: 1em 0; padding: 0; font-size: 0.8em; }
+a { color: #eef; }
+
+pre { display: block; border: 1px #666 solid; background: #eee; padding: 1em; font-size: 0.9em; }
+pre#status { height: 10em; overflow: auto; }
+
+p#online { background: #d00; color: #fff; padding: 1em; }

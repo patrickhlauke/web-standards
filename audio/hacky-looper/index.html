@@ -1,0 +1,58 @@
+<!doctype html>
+<head>
+<title>Hacky looper with scripted audio elements</title>
+<script src="/patrickl/scripts/ga.js"></script>
+<style>
+html, body { background: #999; color: #fff; }
+body {
+	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+	font-size: 0.9em;
+	line-height: 1.2;
+	padding: 0 25px;
+	width: 500px;
+}
+p { margin: 0 0 1em 0; padding: 0; font-size: 0.75em; }
+p small { font-size: 0.5em; color: #ddd; }
+a { color: #eef; }
+audio { display: block; margin: 0; padding: 0; width: 500px; }
+</style>
+</head>
+<body>
+<h1>Hacky looper</h1>
+<p>hacky attempt to temporarily work around the latency issues with the <code>loop</code> attribute which seems to still happens in all browsers. first, let's see (or rather, hear) the issue:</p>
+<audio controls loop>
+	<source src="chiptune.ogg" type="audio/ogg" />
+	<source src="chiptune.mp3" type="audio/mpeg" />
+</audio>
+<p>now, the hacky solution...a group of audio controls, linked together by some simple scripting. play the first audio control, and a quarter of a second before the audio finishes, the next audio element starts playback...not perfect, as it will depends heavily on filesize, actual processor speeds, browser used, etc...but it's a start for now.</p>
+<div id="looper">
+<audio controls>
+	<source src="chiptune.ogg" type="audio/ogg" />
+	<source src="chiptune.mp3" type="audio/mpeg" />
+</audio>
+<audio controls>
+	<source src="chiptune.ogg" type="audio/ogg" />
+	<source src="chiptune.mp3" type="audio/mpeg" />
+</audio>
+<audio controls>
+	<source src="chiptune.ogg" type="audio/ogg" />
+	<source src="chiptune.mp3" type="audio/mpeg" />
+</audio>
+<p><small>Patrick H. Lauke</small></p>
+</div>
+<script>
+var a = document.getElementById('looper').getElementsByTagName('audio');
+var a_active = 0;
+for (var i=0; i<a.length; i++) {
+	a[i].addEventListener('timeupdate',checky, true);
+}
+function checky() {
+	if (a[a_active].currentTime >= a[a_active].duration-0.25) loopy();
+}
+function loopy() {
+	a_active += 1;
+	if (a_active == a.length) { a_active = 0; }
+	a[a_active].play();
+}
+</script>
+</body>

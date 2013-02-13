@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<title>Video glitcher</title>
+<script>
+window.addEventListener('load',function() {
+	var offset = 0;
+	document.getElementById('player').addEventListener('timeupdate',function(e) {
+		if (!this.paused) {
+			if (Math.random()>0.7) {
+				offset-=Math.random()*5;
+				this.currentTime+=offset;
+			}
+			if (offset!=0) {
+				if (Math.random()>0.85) {
+					this.currentTime-=offset;
+					offset = 0;
+				}
+			}
+		}
+		console.log('offset:'+offset);
+	}, true);
+}, true);
+</script>
+<style>
+html { background: #eee; }
+body {
+	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+	font-size: 0.9em;
+	line-height: 1.2;
+	color: #222;
+}
+
+a { color: #227; }
+
+pre { border: 1px #ddd solid; background: #FF9; font-size: 1.2em; padding: 1em; }
+
+video { display: block; }
+#out { border: 1px #ddd solid; background: #FF9; font-size: 3em; }
+</style>
+<body>
+<h1>Video glitcher</h1>
+<video controls width="426" height="240" id="player" loop>
+	<source src="video/garden2.webm" type="video/webm" />
+	<source src="video/garden2.ogv" type="video/ogg" />
+	<source src="video/garden2.mp4" type="video/mp4" />
+	<p>Download the video in <a href="../video/garden2.webm">WebM</a>, <a href="../video/garden2.ogv">Ogg</a> or <a href="../video/garden2.mp4">MP4</a> format.</p>
+</video>

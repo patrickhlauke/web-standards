@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<title>Face Detection local test</title>
+<style type="text/css">
+*, html { font-family: Arial, Helvetica, sans-serif; }
+body, form, ul, li, p, h1, h2, h3, h4, h5
+{
+	margin: 0;
+	padding: 0;
+}
+#instructions, #demo, #messages {
+	display: block;
+	position: relative;
+}
+#instructions, #messages {
+    padding: 10px 0;
+	width: 405px;
+}
+.error {
+    background-color: #CC0000;
+    border: 1px solid #999;
+    font-size: 15px;
+    padding: 10px;
+	color: #FFF;
+}
+.error a {
+	color: #FFFF33;
+}
+#input_video {
+	position: absolute; 
+	top: 0; 
+	left: 0; 
+	z-index: -1;
+}
+#output_canvas {
+	display: block; 
+	background-color: transparent;
+}
+</style>
+<div id="messages"></div>
+<div id="demo">
+  <video id="input_video" autoplay></video>
+  <canvas id="output_canvas"></canvas>
+</div>
+<div id="instructions">
+<h3>Options</h3>
+<p><input type="checkbox" class="control" id="outline" checked="checked"> Show face recognition outline</p>
+<p><input type="checkbox" class="control" id="moustache">Show moustache</p>
+</div>
+
+<script type="text/javascript" src="js/ccv.js"></script>
+<script type="text/javascript" src="js/face.js"></script>
+<script type="text/javascript">
+var videoInput = document.getElementById('input_video');
+var overlayCanvas = document.getElementById('output_canvas');
+
+var controls = document.querySelectorAll("input.control");
+var overlayImages = {};
+
+var compareScale = 2; // make smaller for smoother performance
+var overlayCtx, compareCanvas, compareCtx;
+var canvasCleaner;
+
+var detector;
+var detectionInterval = 0; // make larger for smoother performance
+
+function detectFace() {
+					
+		function complete(comp) {
+			// clear the screen
+			overlayCtx.putImageData(canvasCleaner, 0, 0);
+			// mark detected face(s)
+			for (var i = 0; i < comp.length; i++)  {
+				// Overlay the selected options
+				for (var j = 0; j < controls.length; j++) {
+					if(!controls[j].checked) continue;
+					switch(controls[j].id) {
+					case "outline":
+						overlayCtx.strokeRect(comp[i].x*compareScale, comp[i].y*compareScale, comp[i].width*compareScale, comp[i].height*compareScale);	
+						break;
+					case "moustache":
+						var x = (comp[i].x*compareScale)+((comp[i].width*compareScale) / 8);
+						var y = (comp[i].y*compareScale)+(((comp[i].height*compareScale) / 3) * 2);
+						var width = ((comp[i].width*compareScale) / 8) * 6;
+						var height = (comp[i].height*compareScale) / 4;
+						overlayCtx.drawImage(overlayImages["moustache"], x, y, width, height);
+						break;
+					}
+				}
+			}
+			// Re-schedule detectFace process
+			detector = window.setTimeout(detectFace, detectionInterval);	
+		}
+		
+		// Copy videoInput to compareCanvas
+		compareCtx.drawImage(videoInput, 0, 0, compareCanvas.width, compareCanvas.height);
+			
+		function doDetection() {
+			
+			// Synchronous processing method				
+			var comp = ccv.detect_objects({ "canvas" : ccv.grayscale(ccv.pre(compareCanvas)),
+								 "cascade" : cascade,
+								 "interval" : 5,
+								 "min_neighbors" : 1 /*,
+								 "async" : true,
+								 "worker" : 1*/ });
+			complete(comp);
+								
+			/*// Alternative: Use Web Workers to detect objects (experimental and currently buggy but would be preferred if it worked consistently :( )
+			ccv.detect_objects({ "canvas" : ccv.grayscale(ccv.pre(compareCanvas)),
+								 "cascade" : cascade,
+								 "interval" : 5,
+								 "min_neighbors" : 1,
+								 "async" : true,
+								 "worker" : 1 })(complete);*/
+		}
+		
+		try {
+			doDetection();
+		} catch(e) {
+			videoInput.pause(); 
+			alert('Face detection failed indefinitely :( Please reload the page.');
+		}
+		
+}
+
+window.addEventListener('load', function() {
+						
+	videoInput.addEventListener('playing', function() {
+		if(videoInput.width > videoInput.height) {
+			videoInput.width = 320;
+		} else {
+			videoInput.height = 240;
+		}
+		
+		overlayCanvas.width = videoInput.offsetWidth;
+		overlayCanvas.height = videoInput.offsetHeight;
+		
+		overlayCtx = overlayCanvas.getContext('2d');
+		overlayCtx.lineWidth = 3;
+		overlayCtx.strokeStyle = "#00CC00";
+
+		compareCanvas = document.createElement('canvas');
+		compareCanvas.width = overlayCanvas.width/compareScale;
+		compareCanvas.height = overlayCanvas.height/compareScale;
+		compareCanvas.style.display = "none";
+		compareCtx = compareCanvas.getContext("2d");
+		document.body.appendChild(compareCanvas);
+
+		canvasCleaner = overlayCtx.createImageData(overlayCanvas.width, overlayCanvas.height);
+		for (var i = canvasCleaner.data.length; --i >= 0; )
+			canvasCleaner.data[i] = 0;
+			
+		// Preload all overlay images
+		var preload_counter = 0;
+		
+		function preloadOverlayImage( name, url ) {
+			var myImage = new Image();
+			myImage.onload = function() {
+				overlayImages[name] = myImage;
+				preload_counter--;
+			}
+			preload_counter++;
+			myImage.src = url;
+		}
+		
+		preloadOverlayImage("moustache", "img/moustache.png");
+		// more overlay images can be loaded here
+			
+		// Start face detection only when preloading has completed
+		(function load() {
+			detector = window.setTimeout(function() {
+				if(preload_counter <= 0) {
+					detectFace();
+				} else {
+					load();
+				}
+			}, detectionInterval);
+		})();
+	}, false);
+	
+	if(window.navigator.getUserMedia) {
+		// add a warning box to the page
+	    var instructionsDiv = document.createElement('div');
+	    instructionsDiv.innerHTML = '** Please ensure that "Allow Canvas to Camera Copy is enabled" as detailed in the <a href="http://my.opera.com/core/blog/2011/03/23/webcam-orientation-preview">original blog post</a> **';
+	    document.getElementById('instructions').appendChild(instructionsDiv);
+	
+		window.navigator.getUserMedia('video', function( stream ) {
+				videoInput.src = stream;
+		});
+	} else {
+		// add a warning box to the page
+	    var errorDiv = document.createElement('div');
+	    errorDiv.setAttribute('class', 'error');
+	    errorDiv.innerHTML = 'Your browser does not support native web cam streaming. Here\'s a demo instead. <a href="http://my.opera.com/core/blog/2011/03/23/webcam-orientation-preview">More info</a>';
+	    document.getElementById('messages').appendChild(errorDiv);
+	
+	    // just use a demo video from elsewhere if we don't have native webcam support:
+	    videoInput.src = "/richt/release/tests/device/support/video.ogg";
+	}
+
+}, false);
+</script>

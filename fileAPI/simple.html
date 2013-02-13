@@ -1,0 +1,47 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+<meta charset=utf-8 />
+<title>Simple FileAPI</title>
+<style>
+body { width: 450px; margin: 0 auto; }
+img { max-width: 100%; }
+</style>
+<meta name="viewport" content="width=450">
+</head>
+<body>
+<h1>Simple FileAPI</h1>
+
+<form>
+  <input type=file id=upload name=files>
+</form>
+
+<img src="" alt="">
+<script>
+(function () {
+
+	function doStuff(evt) {
+		var img = document.getElementsByTagName('img')[0];
+		img.src='spinner.gif';
+		var file = evt.target.files[0],reader = new FileReader();
+			reader.onload = function (event) {
+			console.log('file loaded');
+			img.src = event.target.result;
+		};
+		reader.readAsDataURL(file);
+		return false;
+	}
+
+
+	if (typeof window.FileReader === 'undefined') {
+		document.documentElement.className = 'unsupported';
+		return;
+	} 
+  
+	document.getElementById('upload').addEventListener('change', doStuff, false);
+}
+
+)();
+  </script>
+</body>
+</html>

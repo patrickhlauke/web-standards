@@ -1,0 +1,69 @@
+<!doctype html>
+<title>Video with external controls</title>
+<script src="/patrickl/scripts/ga.js"></script>
+<script>
+window.addEventListener('load',function() {
+	document.getElementById('player').addEventListener('timeupdate',function(e) {
+		document.getElementById('out').innerHTML = Math.round(e.target.currentTime*100)/100;
+	}, true);
+	document.getElementById('play').addEventListener('click',function() {
+		document.getElementById('player').play();
+		return false;
+	}, true);
+	document.getElementById('pause').addEventListener('click',function() {
+		document.getElementById('player').pause();
+		return false;
+	}, true);
+	document.getElementById('volume').addEventListener('change',function(e) {
+		document.getElementById('player').volume=e.target.value/10;
+		return false;
+	}, true);
+}, true);
+</script>
+<style>
+html { background: #eee; }
+body {
+	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+	font-size: 0.9em;
+	line-height: 1.2;
+	color: #222;
+}
+
+a { color: #227; }
+
+pre { border: 1px #ddd solid; background: #FF9; font-size: 1.2em; padding: 1em; }
+
+video { display: block; }
+#out { border: 1px #ddd solid; background: #FF9; font-size: 3em; }
+</style>
+<body>
+<h1>Video with external controls</h1>
+<p>HTML5 <a href="http://www.whatwg.org/specs/web-apps/current-work/multipage/video.html#video"><code>video</code> element</a> with external JavaScript controls.</p>
+<video controls width="426" height="240" id="player">
+	<source src="../videos/fridge.webm" type="video/webm" />
+	<source src="../videos/fridge.ogv" type="video/ogg" />
+	<source src="../videos/fridge.mp4" type="video/mp4" />
+	<p>Download the video in <a href="../videos/fridge.webm">WebM</a>, <a href="../videos/fridge.ogv">Ogg</a> or <a href="../videos/fridge.mp4">MP4</a> format.</p>
+</video>
+
+<div id="controls">
+<button id="play">play</button> <button id="pause">pause</button> <input type="range" min="0" max="10" id="volume">
+</div>
+<p id="out"></p>
+<pre><code>
+document.getElementById('player').addEventListener('<strong>timeupdate</strong>',function(e) {
+	document.getElementById('out').innerHTML = Math.round(<strong>e.target.currentTime*100</strong>)/100;
+}, true);
+document.getElementById('play').addEventListener('click',function() {
+	document.getElementById('player').<strong>play()</strong>;
+	return false;
+}, true);
+document.getElementById('pause').addEventListener('click',function() {
+	document.getElementById('player').<strong>pause()</strong>;
+	return false;
+}, true);
+document.getElementById('volume').addEventListener('change',function(e) {
+	document.getElementById('player').<strong>volume=e.target.value</strong>;
+	return false;
+}</code></pre>
+</body>

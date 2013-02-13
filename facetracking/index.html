@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<title>Face tracking test</title>
+<style>
+#demo { position: relative; }
+#input_video, #output_canvas { position: absolute; top: 0; left: 0; }
+</style>
+<div id="messages"></div>
+<div id="demo">
+  <video id="input_video" autoplay></video>
+  <canvas id="output_canvas"></canvas>
+</div>
+
+<script type="text/javascript" src="js/ccv.js"></script>
+<script type="text/javascript" src="js/face.js"></script>
+<script type="text/javascript">
+var videoInput = document.getElementById('input_video');
+var overlayCanvas = document.getElementById('output_canvas');
+
+var compareScale = 2; // make smaller for smoother performance
+var overlayCtx, compareCanvas, compareCtx;
+var canvasCleaner;
+
+var offsetH, offsetV;
+
+var detector;
+var detectionInterval = 10; // make larger for smoother performance
+
+function detectFace() {
+	function complete(comp) {
+		
+		// mark detected face(s)
+		if (comp.length>0) {
+			// clear the screen
+			overlayCtx.clearRect(0,0,overlayCanvas.width,overlayCanvas.height);
+		// only detecting one face
+			var x = (comp[0].x+comp[0].width/2);
+			var y = (comp[0].y+comp[0].height/2);
+			overlayCtx.beginPath();
+			overlayCtx.strokeStyle = "#ff0000";
+			overlayCtx.lineWidth = 1+Math.floor((comp[0].width+comp[0].height)/15);
+			overlayCtx.arc(x*compareScale, y*compareScale,(comp[0].width+comp[0].height)/1.5,0,Math.PI*2, true);
+			overlayCtx.stroke();
+			overlayCtx.lineWidth = "2";
+			overlayCtx.beginPath();
+			overlayCtx.moveTo(overlayCanvas.width/2,overlayCanvas.height/2);
+			overlayCtx.lineTo(x*compareScale,y*compareScale);
+			overlayCtx.stroke();
+			overlayCtx.lineWidth = "4";
+			overlayCtx.beginPath();
+	overlayCtx.arc(overlayCanvas.width/2,overlayCanvas.height/2,10,0,Math.PI*2,true);
+			overlayCtx.stroke();
+			
+			offsetH = x*compareScale-overlayCanvas.width/2;
+			offsetV = y*compareScale-overlayCanvas.height/2;
+		}
+		// Re-schedule detectFace process
+		detector = window.setTimeout(detectFace, detectionInterval);	
+	}
+		
+	// Copy videoInput to compareCanvas
+	compareCtx.drawImage(videoInput, 0, 0, compareCanvas.width, compareCanvas.height);
+
+	function doDetection() {
+		// Synchronous processing method				
+		var comp = ccv.detect_objects({ "canvas" : ccv.grayscale(ccv.pre(compareCanvas)),
+							 "cascade" : cascade,
+							 "interval" : 5,
+							 "min_neighbors" : 1 /*,
+							 "async" : true,
+							 "worker" : 1*/ });
+		complete(comp);
+								
+		/*// Alternative: Use Web Workers to detect objects (experimental and currently buggy but would be preferred if it worked consistently :( )
+		ccv.detect_objects({ "canvas" : ccv.grayscale(ccv.pre(compareCanvas)),
+							 "cascade" : cascade,
+							 "interval" : 5,
+							 "min_neighbors" : 1,
+							 "async" : true,
+							 "worker" : 1 })(complete);*/
+	}
+	try {
+		doDetection();
+	} catch(e) {
+		videoInput.pause(); 
+		alert('Face detection failed indefinitely :( Please reload the page.');
+	}
+
+}
+
+window.addEventListener('load', function() {
+	videoInput.addEventListener('playing', function() {
+		if(videoInput.width > videoInput.height) {
+			videoInput.width = 320;
+		} else {
+			videoInput.height = 240;
+		}
+		
+		overlayCanvas.width = videoInput.offsetWidth;
+		overlayCanvas.height = videoInput.offsetHeight;
+		
+		overlayCtx = overlayCanvas.getContext('2d');
+		overlayCtx.lineWidth = 3;
+		overlayCtx.strokeStyle = "#00CC00";
+
+		compareCanvas = document.createElement('canvas');
+		compareCanvas.width = overlayCanvas.width/compareScale;
+		compareCanvas.height = overlayCanvas.height/compareScale;
+		compareCtx = compareCanvas.getContext("2d");
+
+		canvasCleaner = overlayCtx.createImageData(overlayCanvas.width, overlayCanvas.height);
+		for (var i = canvasCleaner.data.length; --i >= 0; )
+			canvasCleaner.data[i] = 0;
+	},false);
+	
+	if(window.navigator.getUserMedia) {
+		window.navigator.getUserMedia({video: true}, function( stream ) {
+				videoInput.src = stream;
+				detector = window.setTimeout(detectFace, detectionInterval);
+		});
+	} else {
+		// fail
+	}
+
+}, false);
+</script>

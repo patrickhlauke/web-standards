@@ -1,0 +1,59 @@
+<!doctype html>
+<html>
+<head>
+<title>canvas-based image manipulator</title>
+<style>
+body {
+background: black; color: white;
+}
+</style>
+<script src="/patrickl/scripts/ga.js"></script>
+<script>
+function go() {
+var canvas = document.getElementById('myCanvasElt');
+            var ctx = canvas.getContext('2d');
+
+            var source = document.querySelector("img");
+            ctx.drawImage(source, 0, 0);
+
+            var canvasData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+
+var sliderR = document.getElementById('r');
+var sliderG = document.getElementById('g');
+var sliderB = document.getElementById('b');
+
+for (var x = 0; x < canvasData.width; x++) {
+	for (var y = 0; y < canvasData.height; y++) {
+
+		// Index of the pixel in the array
+		var idx = (x + y * canvas.width) * 4;
+
+		// The RGB values
+		var r = canvasData.data[idx + 0];
+		var g = canvasData.data[idx + 1];
+		var b = canvasData.data[idx + 2];
+
+		// Update the values of the pixel;
+		canvasData.data[idx + 0] = (r+Math.floor(sliderR.value) < 255) ? r+Math.floor(sliderR.value) : 255;
+		canvasData.data[idx + 1] = (g+Math.floor(sliderG.value) < 255) ? g+Math.floor(sliderG.value) : 255;
+		canvasData.data[idx + 2] = (b+Math.floor(sliderB.value) < 255) ? b+Math.floor(sliderB.value) : 255;		
+	}
+}
+ctx.putImageData(canvasData, 0, 0);
+}
+</script>
+</head>
+
+<body onload="go()">
+<img src="model.jpg">
+<canvas id='myCanvasElt' width="333" height="500"></canvas>
+<form>
+<label for="r">Red</label>
+<input type="range" min="0" max="255" name="r" id="r" value="0" onchange="go()">
+<label for="g">Green</label>
+<input type="range" min="0" max="255" name="g" id="g" value="0" onchange="go()">
+<label for="b">Blue</label>
+<input type="range" min="0" max="255" name="b" id="b" value="0" onchange="go()">
+</form>
+</body>
+</html>

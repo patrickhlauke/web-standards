@@ -1,0 +1,161 @@
+﻿<!DOCTYPE html>
+<head>
+<title>Touch events to implement pinch/rotate gestures</title>
+<meta name="viewport" content="width=420, user-scalable=no">
+<script src="/patrickl/scripts/ga.js"></script>
+<script>
+function coords(x,y) {
+	this.x = x;
+	this.y = y;
+}
+
+function gestureHandler(canvas,fnew,fswipe,fmulti) {
+
+	// define a data structure to store our touchpoints in
+
+	this.canvas = canvas;
+	this.canvasContext = this.canvas.getContext("2d");
+	this.store = new Array();
+	this.store[0] = new coords(0,0);
+	this.store[1] = new coords(0,0);
+	this.fnew = fnew;
+	this.fswipe = fswipe;
+	this.fmulti = fmulti;
+	
+	this.newgesture = function() {
+		this.store[0].x = this.store[0].y = this.store[1].x = this.store[1].y = 0;
+		fnew();
+	}
+	
+	this.gesture = function(e) {
+		var x1 = x2 = y1 = y2 = i = 0;
+		if (e.targetTouches) {
+		
+			this.canvasContext.clearRect(0, 0, 400, 400);
+			if (e.targetTouches.length>=2) {
+			
+				// two (or more) fingers for resize/rotate
+				x1=e.targetTouches[0].pageX-e.target.offsetLeft;
+				y1=e.targetTouches[0].pageY-e.target.offsetTop;
+				x2=e.targetTouches[1].pageX-e.target.offsetLeft;
+				y2=e.targetTouches[1].pageY-e.target.offsetTop;
+				
+				this.canvasContext.beginPath();
+				this.canvasContext.arc(x1, y1, 30, 0, Math.PI*2, true); 
+				this.canvasContext.arc(x2, y2, 30, 0, Math.PI*2, true); 
+				this.canvasContext.fill();
+				this.canvasContext.lineWidth=10;
+				this.canvasContext.beginPath();
+				this.canvasContext.moveTo(x1, y1);
+				this.canvasContext.lineTo(x2, y2);
+				this.canvasContext.stroke();
+				
+				if (this.store[0].x!=0) {
+					fmulti(Math.sqrt(Math.pow((x1-x2),2)+Math.pow((y1-y2),2)) - Math.sqrt(Math.pow((this.store[0].x-this.store[1].x),2)+Math.pow((this.store[0].y-this.store[1].y),2)), (Math.atan((y2-y1)/(x2-x1)) - Math.atan((this.store[1].y-this.store[0].y)/(this.store[1].x-this.store[0].x)))*Math.PI/180);
+				}
+				
+				// store the values for later comparison
+				this.store[0].x = x1;
+				this.store[0].y = y1;
+				this.store[1].x = x2;
+				this.store[1].y = y2;
+				
+			} else if (e.targetTouches.length == 1) {
+				
+				// one finger for swipes
+				x1=e.targetTouches[0].pageX-e.target.offsetLeft;
+				y1=e.targetTouches[0].pageY-e.target.offsetTop;
+				
+				this.canvasContext.beginPath();
+				this.canvasContext.arc(x1, y1, 30, 0, Math.PI*2, true); 
+				this.canvasContext.fill();
+				
+				if (this.store[0].x!=0) {
+					fswipe(x1-this.store[0].x,y1-this.store[0].y);
+				}
+							
+				// store the values for later comparison
+				this.store[0].x = x1;
+				this.store[0].y = y1;
+			}
+		} 	
+	}
+
+	this.init = function() {
+		var that = this;
+		this.canvas.addEventListener('touchstart', function(e) { e.preventDefault(); that.newgesture(); that.gesture(e); }, false);
+		this.canvas.addEventListener('touchmove', function(e) { e.preventDefault(); that.gesture(e); }, false);
+	}
+	
+}
+function newtouch() {
+	document.getElementById('out').innerHTML = 'New touch...';
+}
+
+function swipe(dx,dy) {
+	document.getElementById('out').innerHTML = 'Swipe: ';
+	// bias - only recognise big movements using some arbitrary big value
+	if (Math.abs(dx)+Math.abs(dy) > 20) {
+		if (Math.abs(dx)>Math.abs(dy)) {
+			if (dx>0) {
+				document.getElementById('out').innerHTML += ' RIGHT';
+			} else {
+				document.getElementById('out').innerHTML += ' LEFT';
+			}
+		} else {
+			if (dx>0) {
+				document.getElementById('out').innerHTML += ' DOWN';
+			} else {
+				document.getElementById('out').innerHTML += ' UP';
+			}
+		}
+	}
+}
+
+function multi(resize,angle) {
+	document.getElementById('out').innerHTML = 'Resize: ';
+	// bias - only recognise big movements using some arbitrary big value
+	if (Math.abs(resize)>1) {
+		if (resize>0) {
+			document.getElementById('out').innerHTML += ' BIGGER';
+		} else {
+			document.getElementById('out').innerHTML += ' SMALLER';
+		}
+	}
+	if (Math.abs(angle)>0) {
+		document.getElementById('out').innerHTML += '<br>Rotation: ';
+		if (angle>0) {
+			document.getElementById('out').innerHTML += ' CLOCKWISE';
+		} else {
+			document.getElementById('out').innerHTML += ' COUNTERCLOCKWISE';
+		}
+	}
+}
+
+</script>
+<style>
+html, body { background: #999; color: #fff; margin:0; padding: 0; }
+body {
+	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+	font-size: 0.9em;
+	line-height: 1.2;
+	width: 400px;
+	padding: 0 10px;
+}
+h1 { font-size: 1em; }
+canvas { margin: 5px 0; border: 1px #aaa solid; }
+p small { margin: 0; padding: 0; font-size: 0.75em; }
+a { color: #eef; }
+</style>
+</head>
+<body>
+<h1>Touch events to implement pinch/rotate gestures</h1>
+<canvas width="400" height="300" id="emitter-canvas"></canvas>
+<output id="out"></output>
+<script>
+window.addEventListener('load',function() {
+	var gh = new gestureHandler(document.getElementById('emitter-canvas'),newtouch,swipe,multi);
+	gh.init();
+}, false);
+</script>
+</body>

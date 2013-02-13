@@ -1,0 +1,42 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+<title>HTML5 / SVG / JavaScript</title>
+<style>
+object { border: 3px #f00 solid; margin: 3em 0; padding: 1em; }
+</style>
+<script>
+var giga = {
+	timerId : 0,
+	init : function() {
+		giga.timerId = setInterval(giga.clone,250);
+	},
+	clone : function() {
+		// grab the SVG
+		var svg = document.getElementById('pudding').contentDocument.documentElement;
+		// count how many gigas we already have
+		var giga = svg.getElementsByClassName('giga');
+		// if we have more than 30, cancel the timer. otherwise, clone!
+		if (giga.length>30) {
+			clearInterval(giga.timerId);
+		} else {
+			// clone the first giga group
+			newgiga = giga[0].cloneNode(true);
+			// pop it into the svg
+			svg.appendChild(newgiga);
+			// change the cloned group's position
+			newgiga.setAttribute('transform','translate('+(Math.floor(Math.random()*10)*40)+','+(Math.floor(Math.random()*10)*40)+')');
+		}
+	}
+}
+window.addEventListener('load',giga.init, true);
+</script>
+</head>
+<body>
+<h1>Mixing HTML5 / SVG / JavaScript</h1>
+<p>the SVG only has one of these characters...but we use JavaScript to then clone him.</p>
+<object id="pudding" data="giga.svg" width="500" height="500"></object>
+
+
+</body>
+</html>

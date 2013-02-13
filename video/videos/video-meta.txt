@@ -1,0 +1,61 @@
+﻿Windowsill of lost memories
+
+Garden serenity part 1
+
+Garden serenity part 2
+
+Fridge magnet world tour
+
+Patrick H. Lauke
+
+Opera Software
+
+22 April 2010
+
+Video: Patrick H. Lauke / splintered.co.uk. Music: Kevin MacLeod / incompetech.com. Creative Commons Attribution 3.0 http://creativecommons.org/licenses/by/3.0/
+
+***
+
+microsoft AVI
+uncompressed UYVY 422 8bit
+426x240
+25 fps progressive
+square pixels
+24 bit depth
+keyframe interval 1
+uncompressed audio 44khz
+stereo
+16 bit
+audio interleave 0
+
+***
+
+H.264
+MainConcept H.264 Video
+PAL
+426x240
+25 fps progressive
+square pixels
+profile: main
+level: 3.1
+VBR 2 Pass encoding
+Target 2.25Mbps
+Maximum 8.89Mbps
+AAC audio
+Stereo
+44.1 kHz
+High quality
+320Kbps
+Frequency precedence
+
+***
+
+Firefogg
+Video quality: 5
+Audio quality: 1
+426x240
+Video bitrate: 16778
+Two pass
+25fps
+16:9 ratio
+keyframe interval: 64

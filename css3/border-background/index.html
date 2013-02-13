@@ -1,0 +1,23 @@
+<!doctype html>
+<title>CSS3 border-image</title>
+<style>
+img {
+	display: block;
+	
+	border: 20px transparent solid;
+	
+	background-color: #eee;
+	background-origin: border-box; /* as we're putting the centermarks around the photo's border with a background image, we need to ensure that the background is actually displayed in the border area as well */
+	background-image: url(centermarks.png), url(centermarks.png), url(centermarks.png), url(centermarks.png), url(bullseye.png), url(bullseye.png), url(bullseye.png), url(bullseye.png), url(bullseye.png), url(bullseye.png), url(bullseye.png), url(bullseye.png), url(colourbar.png); /* a single image which we'll use for the 4 centermarks */
+	background-repeat: no-repeat;
+	background-position: center bottom, center top, left center, right center, 0 15%,  0 85%,  100% 15%,  100% 85%, 15% 0, 85% 0, 15% 100%, 85% 100%, 100% 70%; /* positions for the 4  centermarks */
+	margin: 1em; padding: 0;
+	
+}
+</style>
+<script src="/patrickl/scripts/ga.js"></script>
+<body>
+<p><a href="http://www.w3.org/TR/css3-background/#background-origin"><code>background-origin</code></a> and <a href="http://www.w3.org/TR/css3-background/#layering">multiple <code>background-image</code></a></p>
+<img src="valve.jpg" width="333" height="500" />
+<small><a href="http://www.flickr.com/photos/redux/3942904754/">Photo by Patrick H. Lauke</a></small>
+</body>

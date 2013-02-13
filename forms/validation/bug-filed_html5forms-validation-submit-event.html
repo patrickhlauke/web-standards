@@ -1,0 +1,12 @@
+<!doctype>
+<head>
+<title>HTML5 form validation - submit event fired too soon</title>
+</head>
+<body>
+<form onsubmit="alert('this should fire AFTER client-side validation')">
+<label for="foo">A required field</label>
+<input id="foo" name="foo" type="text" required placeholder="Leave empty to trigger error">
+<input type="submit" value="submit">
+</form>
+<p>as per the <a href="http://www.w3.org/TR/html5/association-of-controls-and-forms.html#form-submission">form submission</a> steps, the submit event (or, as in this case, <code>onsubmit</code>)  (step 6) should fire <strong>after</strong> client-side validation (step 5) has happened. currently, we fire it <strong>before</strong>.</p>
+</body>

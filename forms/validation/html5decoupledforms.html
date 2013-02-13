@@ -1,0 +1,18 @@
+<!doctype html>
+<title>Decoupled form fields test</title>
+<body>
+<input type="search" name="search_field" form="search_form">
+
+<p>And at the bottom:</p>
+<form id="search_form">
+  <fieldset>
+    <legend>Advanced options</legend>
+    <input type="checkbox" name="check" value="1">Private posts
+    <!-- Other options -->
+  </fieldset>
+  <input type="submit" value="submit">
+</form>
+<form id="search_form2">
+  <input type="text" name="foo" value="fooo">
+  <input type="submit" value="submit">
+</form>

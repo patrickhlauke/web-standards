@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+<meta charset=utf-8>
+<title>HTML5 forms: date / time</title>
+<script src="/patrickl/scripts/ga.js"></script>
+<style>
+html {
+	font-family:Verdana;
+	font-size:1em; max-width: 50em;
+}
+
+input,select,textarea { font-size: 1em; }
+
+pre { padding:1em; border: 1px #ddd solid; background: #FF9; }
+code { font-family:Courier New, Courier, monospace; font-size:1em; }
+h1 {
+	color:#5999DE;
+}
+form {
+	font:100% Lucinda Grande, Sans-serif;
+	margin: 0;
+	padding: 0;	
+	width: 90%;
+	padding: 10px;
+}
+input {
+	margin-bottom:1em; display:table-row;
+}
+label {
+	color:#666666;
+display:table-cell;
+	text-align: right;
+}
+input, textarea {
+	margin-left:10px;
+	display:table-cell;
+}
+.button {
+	padding-left:140px;
+	padding-bottom:5px;
+	padding-top:5px;
+}
+input:required {
+outline: 3px red solid;
+color:red;
+}
+</style>
+
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+</head><body>
+
+
+<h1>HTML5 forms: date / time</h1>
+<form onsubmit="return false;">
+
+<label for="foo6">datetime</label>
+<input type="datetime" name="foo6" id="foo6">
+<label for="foo11">datetime-local</label>
+<input type="datetime-local" name="foo11" id="foo11">
+<label for="foo7">date</label>
+<input type="date" name="foo7" id="foo7">
+<label for="foo8">month</label>
+<input type="month" name="foo8" id="foo8">
+<label for="foo9">week</label>
+<input type="week" name="foo9" id="foo9">
+<label for="foo10">time</label>
+<input type="time" name="foo10" id="foo10">
+
+</form>
+</body>
+</html>

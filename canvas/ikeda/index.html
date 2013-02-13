@@ -1,0 +1,93 @@
+<!doctype html>
+<title>Canvas ikeda attractor</title>
+<style>
+canvas#ikeda { width: 300px; height: 300px; }
+</style>
+<script src="/patrickl/scripts/ga.js"></script>
+<script>
+// IKEDA attractor variations
+// based on Clifford A. Pickover's algorhythm in "Computers and the Imagination"
+// adapted by Patrick H. Lauke
+// based on my processing experiment http://www.splintered.co.uk/experiments/63/ from 31 Oct 2004
+
+var dim, c1, c2, c3, rho, basecolor, complexity, i, x, y, j, k, ji, ki, current, scale, xoff, yoff, xt, yt, temp, sin_temp, cos_temp, randomizer, elem, context;
+
+function setup()
+{
+	// initialise a few parameters
+	basecolor=255;
+	dim=300;
+	scale = dim/3.75;
+	complexity = dim*100;
+	xoff = dim/3;
+	yoff = dim/1.7;
+	c1 = 0.4;
+	c2 = 0.85;
+	c3 = 0.6;
+	rho = 1.0;
+	randomizer = 0;
+
+	// Get a reference to the element.
+	elem = document.getElementById('ikeda');
+	
+	// Always check for properties and methods, to make sure your code doesn't break 
+	// in other browsers.
+	if (elem && elem.getContext) {
+		// Get the 2d context.
+		context = elem.getContext('2d');
+	}
+}
+
+function loop() {
+  // an empty loop...simply waits for mouse input
+}
+
+function mousePressed() {
+	// wipe the drawing area
+	/* background(basecolor); */
+	// randomize
+	randomizer = Math.random(0.3);
+}
+
+function mouseMoved()
+{
+	// alter key parameters based on mouse position
+	c3=(mouseX/dim)*10+5.9;
+	rho=(mouseY/dim)*0.2+0.9;
+	// redraw the shape
+	ikeda();
+}
+
+function ikeda()
+{
+	x = 0.1;
+	y = 0.1;
+	for (i=0; i <= complexity; i++) {
+		// calculate position of new point
+		temp = c1 - c3 / (1.0 + randomizer * 3 + x * x + y * y);
+		sin_temp = Math.sin(temp);
+		cos_temp = Math.cos(temp);
+		xt = rho + c2 * (x * cos_temp - y * sin_temp);
+		yt = randomizer + c2 * (x * sin_temp + y * cos_temp);
+		// adapt calculated coordinates to current drawing area
+		j = xt * scale + xoff;
+		k = yt * scale + yoff;
+		// normalise the point's position to the nearest integer
+		ji = parseInt(j);
+		ki = parseInt(k);
+		// grab the red component of the point's current color
+		/* current = red(get(ji,ki)); */
+		// set the drawing color to the current color minus a small offset
+		/* stroke(current-1); */
+		// and draw the point
+		context.fillRect(j,k,1,1);
+		// assign new position as starting point for next iteration
+		x = xt;
+		y = yt;
+	}
+}
+</script>
+<body>
+<p>using <code>canvas</code> to draw an <a href="http://en.wikipedia.org/wiki/Ikeda_map">ikeda attractor</a></p>
+<canvas id="ikeda"></canvas>
+</body>

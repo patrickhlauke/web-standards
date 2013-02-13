@@ -1,0 +1,35 @@
+﻿<!doctype html>
+<html>
+<head>
+<title>CSS3 transition firing event on completion</title>
+<script src="/patrickl/scripts/ga.js"></script>
+<style>
+.box {
+-moz-transition: all 2s ease-in-out; width: 100px;
+-o-transition: all 2s ease-in-out; width: 100px;
+-webkit-transition: all 2s ease-in-out; width: 100px;
+transition: all 2s ease-in-out; width: 100px;
+height:100px; background: #f00; }
+.box:hover, .box:focus { width: 200px; height: 200px; background: #ff0; }
+</style>
+</head>
+<body>
+<h1>CSS3 transition firing event on completion</h1>
+<p>See Opera's <a href="http://www.opera.com/docs/specs/presto26/css/transitions/#events">Transition events support</a>. Try hovering/unhovering continuously and then letting the transition complete - Opera and Webkit always report that it took 2 seconds, while only Firefox (4 beta 5 atm) reports the actual time the whole transition has been going. The spec seems unclear here...</p>
+<div class="box" tabindex="1">
+hover/focus me
+</div>
+<output>
+</output>
+<script>
+document.getElementsByClassName('box')[0].addEventListener('oTransitionEnd',outputEvent,false);
+document.getElementsByClassName('box')[0].addEventListener('webkitTransitionEnd',outputEvent,false);
+document.getElementsByClassName('box')[0].addEventListener('transitionend',outputEvent,false);
+
+function outputEvent(e){
+	document.getElementsByTagName('output')[0].innerHTML+='<br/>'+e.propertyName+': '+e.elapsedTime+' seconds';
+}
+
+</script>
+</body>
+</html>

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<head>
+<title>SVG grid object overlay</title>
+    <style>
+    	#overlay { 
+    		position: absolute;
+    		z-index: 100;
+    		width: 100%;
+    		height: 220%;
+    		top: 0;
+    		left: 0;
+    		overflow: hidden;
+			border: 1px #f00 solid;
+    	}
+    </style>
+<script>
+window.addEventListener('load',function(){
+	var overlay = document.createElement('object');
+	overlay.setAttribute('id','overlay');
+	overlay.setAttribute('data','./images/grid.svg');
+	document.getElementsByTagName('body')[0].appendChild(overlay);
+	var svg = overlay.contentDocument.documentElement;
+	svg.getElementById('line_vertical').setAttribute('stroke-dasharray','20, 5');
+}, true);
+</script>
+</head>
+<body>
+<h1>Test test test</h1>
+<p>test test test test test test</p>
+</body>

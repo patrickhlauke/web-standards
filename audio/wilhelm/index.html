@@ -1,0 +1,47 @@
+﻿<!doctype html>
+<head>
+<title>The Wilhelm scream - audio in HTML5</title>
+<script src="/patrickl/scripts/ga.js"></script>
+<style>
+@font-face {
+	/* typeface: Comic Book by Neale Davidson / www.dafont.com */
+	font-family: "ComicBook";
+	src: url(ComicBook.ttf);
+}
+
+body {
+	background: #eee;
+	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+	font-size: 0.9em;
+	line-height: 1.2;
+	color: #222;
+	width: 500px;
+	margin: 2em;
+}
+
+button {
+	font-family: "ComicBook";
+	font-size: 80px;
+	border: 1px #000 solid;
+	background: #fff;
+	box-shadow: 5px 5px 5px;
+}
+
+blockquote { margin: 2em 0 0 0; padding: 0; }
+
+blockquote, cite { font-size: 0.75em; }
+
+</style>
+</head>
+
+<body>
+<h1>The Wilhelm scream</h1>
+<p>Simple demonstration of the <code>audio</code> element in HTML5.</p>
+<audio id="sfx">
+	<source src="wilhelm.ogg" type="audio/ogg" />
+	<source src="wilhelm.mp3" type="audio/mpeg" />
+</audio>
+<button onclick="document.getElementById('sfx').play()">Aaaaargh...</button>
+<blockquote>The sound effect originates from a series of sound effects recorded for the 1951 film Distant Drums. In a scene from the film, soldiers are wading through a swamp in the everglades and one of them is bitten and dragged underwater by an alligator.</blockquote>
+<p><a href="http://en.wikipedia.org/wiki/Wilhelm_scream"><cite>Wikipedia: Wilhelm scream</cite></a></p>
+</body>

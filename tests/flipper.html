@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<head>
+<title>Resize events firing</title>
+<script>
+function report() { document.getElementsByTagName('output')[0].innerHTML += ' flipped orientation!'; }
+window.addEventListener('resize', report, false);
+</script>
+</head>
+<body>
+<h1>Resize events firing</h1>
+<p>Flip portrait/landscape...do events fire?</p>
+<output></output>
+</body>

@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<title>Testing format detection with format-detection meta no</title>
+<meta name="format-detection" content="telephone=no">
+
+<h1>Testing format detection with format-detection meta</h1>
+
+<pre><code>&lt;meta name="format-detection" content="telephone=no"&gt;</code></pre>
+
+<p>Format detection (UK numbers pipes): +441111234567 | +44(0)1111234567 | +44 (0)1111 234567 | +44 (0) 1111 234567 | 01111234567 | 01111-234567 | 01111 234567 | (01111) 234567</p>
+<p>Format detection (UK numbers alpha): +441111234567 a +44(0)1111234567 b +44 (0)1111 234567 c +44 (0) 1111 234567 d 01111234567 e 01111-234567 f 01111 234567 g (01111) 234567</p>
+<p>Format detection (UK numbers punctuation): +441111234567. +44(0)1111234567, +44 (0)1111 234567; +44 (0) 1111 234567: 01111234567? 01111-234567! 01111 234567- (01111) 234567</p>
+<p>Format detection (UK numbers extra space): +441111234567  +44(0)1111234567  +44 (0)1111 234567  +44 (0) 1111 234567  01111234567  01111-234567  01111 234567  (01111) 234567</p>
+<p>Format detection (UK numbers single space): +441111234567 +44(0)1111234567 +44 (0)1111 234567 +44 (0) 1111 234567 01111234567 01111-234567 01111 234567 (01111) 234567</p>

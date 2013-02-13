@@ -1,0 +1,43 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+<title>Untitled Document</title>
+<script src="/patrickl/scripts/ga.js"></script>
+<style type="text/css">
+body { padding: 0 50px; }
+a { color: #f00; }
+
+#outline-suppressed a { outline: none;}
+
+#outline-suppressed-on-active a:active { outline: none; }
+
+a:focus, a:hover, a:active { background: #ff0; color: #555; }
+a.ir-indent { width: 175px; height: 50px; display: block; background: url(ir-indent.gif) no-repeat top left; text-indent: -9999em; overflow: hidden; }
+a:focus.ir-indent, a:hover.ir-indent, a:active.ir-indent { background-image: url(ir-indent-over.gif); }
+</style>
+</head>
+
+<body>
+<h1>Keyboard accessibility basics demos 2</h1>
+
+<div id="regular">
+<h2>Default with overflow:hidden</h2>
+<p><a href="#">regular link</a></p>
+<p><a href="#" class="ir-indent">image replacement with text indent</a></p>
+</div>
+
+<div id="outline-suppressed">
+<h2>Outline suppressed</h2>
+<p><a href="#">regular link</a></p>
+<p><a href="#" class="ir-indent">image replacement with text indent</a></p>
+</div>
+
+<div id="outline-suppressed-on-active">
+<h2>Outline suppressed on active only</h2>
+<p><a href="#">regular link</a></p>
+<p><a href="#" class="ir-indent">image replacement with text indent</a></p>
+</div>
+
+</body>
+</html>

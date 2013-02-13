@@ -1,0 +1,88 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+<meta charset=utf-8 />
+<title>Image retrofyer</title>
+<style>
+body { width: 450px; margin: 0 auto; }
+</style>
+<meta name="viewport" content="width=450">
+</head>
+<body>
+<h1>Image retrofyer</h1>
+
+<form>
+  <input type=file id=upload name=files>
+</form>
+
+<canvas id="c" width=400 height=400></canvas>
+<button id="retro" disabled>make it retro!</button>
+<script>
+(function () {
+
+var canvas = document.getElementById('c');
+var ctx = canvas.getContext('2d');
+var max_size = 400;
+
+function doStuff(evt) {
+  document.getElementById('retro').disabled = 'disabled';
+  canvas.width = canvas.height = max_size;
+  var file = evt.target.files[0],reader = new FileReader();
+  reader.onload = function (event) {
+	console.log('file loaded');
+	var img = new Image;
+	img.onload = function() {
+		console.log('image loaded');
+		// work out if it's portrait or landscape, and resize accordingly
+		if (img.width > img.height) {
+			img.width = max_size;
+			img.height = (img.height/img.width)*max_size;
+		} else {
+			img.width = (img.width/img.height)*max_size;
+			img.height = max_size;
+		}
+		canvas.width = img.width; canvas.height = img.height;
+		ctx.drawImage(this,0,0,img.width,img.height);
+		document.getElementById('retro').disabled = '';
+	}
+
+	img.src = event.target.result;
+  };
+  reader.readAsDataURL(file);
+
+  return false;
+}
+
+function retrofy() {
+	console.log('initiating retrofication');
+	var canvasData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+	for (var x = 0; x < canvasData.width; x++) {
+		for (var y = 0; y < canvasData.height; y++) {
+
+			// Index of the pixel in the array
+			var idx = (x + y * canvas.width) * 4;
+
+			// The RGB values
+			var r = canvasData.data[idx + 0];
+			var g = canvasData.data[idx + 1];
+			var b = canvasData.data[idx + 2];
+			var average = (r+b+g)/3;
+			canvasData.data[idx + 0] = canvasData.data[idx + 1] =  canvasData.data[idx + 2] = average;		
+		}
+	}
+	ctx.putImageData(canvasData, 0, 0);
+}
+
+if (typeof window.FileReader === 'undefined') {
+  document.documentElement.className = 'unsupported';
+  return;
+} 
+  
+ document.getElementById('upload').addEventListener('change', doStuff, false);
+ document.getElementById('retro').addEventListener('click',retrofy,false);
+     }
+
+)();
+  </script>
+</body>
+</html>

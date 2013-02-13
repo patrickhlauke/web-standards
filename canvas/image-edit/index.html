@@ -1,0 +1,102 @@
+﻿<!doctype html>
+<html>
+<head>
+<title>canvas image manipulation</title>
+<style>
+body {
+	background: #eee;
+	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+	font-size: 0.9em;
+	line-height: 1.2;
+	color: #222;
+}
+
+canvas { background: #555; }
+
+a { color: #227; }
+
+#credits { clear: left; margin: 0; padding: 1em 0 0 0; }
+#credits p { margin: 0; padding: 0; }
+small { font-size: 0.5em; }
+</style>
+<script src="/patrickl/scripts/ga.js"></script>
+<script src="colorhelper.js"></script>
+<script>
+function redraw() {
+	var canvas = document.getElementById('c');
+	var ctx = canvas.getContext('2d');
+
+	var source = document.querySelector("img");
+	ctx.drawImage(source, 0, 0);
+
+	var canvasData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+
+	var sliderH = document.getElementById('h');
+	var sliderS = document.getElementById('s');
+	var sliderL = document.getElementById('l');
+
+	for (var x = 0; x < canvasData.width; x++) {
+		for (var y = 0; y < canvasData.height; y++) {
+
+			// Index of the pixel in the array
+			var idx = (x + y * canvas.width) * 4;
+
+			// The RGB values
+			var r = canvasData.data[idx + 0];
+			var g = canvasData.data[idx + 1];
+			var b = canvasData.data[idx + 2];
+			
+			// Manipulate the individual values based on sliders
+			var hsl = rgbToHsl(r,g,b);
+			hsl[0] = hsl[0]+Math.floor(sliderH.value)/359;
+			hsl[1] = hsl[1]+Math.floor(sliderS.value)/100;
+				// special case of lightness as an exponential control (finer control)
+				if (sliderL.value>0) {
+					hsl[2] = hsl[2]+(Math.floor(sliderL.value)/100)*(Math.floor(sliderL.value)/100);
+				} else {
+					hsl[2] = hsl[2]-(Math.floor(sliderL.value)/100)*(Math.floor(sliderL.value)/100);
+				}
+			// Normalise hue
+			if (hsl[0]>1) { hsl[0]-=1; } else if (hsl[0]<0) { hsl[0]+=1; }
+			// Clip saturation and lightness to min/max allowed
+			if (hsl[1]>1) { hsl[1]=1; } else if (hsl[1]<0) { hsl[1]=0; }
+			if (hsl[2]>1) { hsl[2]=1; } else if (hsl[2]<0) { hsl[2]=0; }
+			
+			// Update the values of the pixel;
+			canvasData.data[idx + 0] = hslToRgb(hsl[0],hsl[1],hsl[2])[0];
+			canvasData.data[idx + 1] = hslToRgb(hsl[0],hsl[1],hsl[2])[1];
+			canvasData.data[idx + 2] = hslToRgb(hsl[0],hsl[1],hsl[2])[2];
+
+			// rough debug
+			if ((canvasData.data[idx + 0] > 255)||(canvasData.data[idx + 0] < 0)) {
+				console.log('out of range value');
+			}
+			
+		}
+	}
+	ctx.putImageData(canvasData, 0, 0);
+}
+</script>
+</head>
+
+<body onload="redraw()">
+<h1><code>canvas</code> image manipulation</h1>
+<img src="model.jpg">
+<canvas id='c' width="333" height="500"></canvas>
+<p>Manipulate the overall hue, saturation and lightness of the image on a pixel-by-pixel basis.</p>
+<p><strong>Warning:</strong> this may kill your browser, as it's quite an unoptimised script.</p>
+
+<label for="h">Hue</label>
+<input type="range" min="-359" max="359" name="h" id="h" value="0">
+<label for="s">Saturation</label>
+<input type="range" min="-100" max="100" name="s" id="s" value="0">
+<label for="l">Lightness</label>
+<input type="range" min="-100" max="100" name="l" id="l" value="0">
+<button onclick="redraw()">Render</button>
+
+<div id="credits">
+<p><small>Photo: <a href="http://www.splintered.co.uk">Patrick H. Lauke</a>. <a href="http://creativecommons.org/licenses/by/3.0/">Creative Commons Attribution 3.0</a></small></p>
+<p><small><a href="http://dev.opera.com/">Dev.Opera – Opera Developer Community</a></small></p>
+</div>
+</body>
+</html>

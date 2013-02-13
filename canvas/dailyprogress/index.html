@@ -1,0 +1,44 @@
+<!doctype html>
+<html>
+<title>Daily progress bar</title>
+<style>
+/* typeface: Silkscreen http://kottke.org/plus/type/silkscreen/ */
+@font-face {
+    font-family: "Silkscreen";
+    src: url(slkscr.ttf)
+}
+div { font-family: Silkscreen, Courier New, Courier, sans; font-size: 8px; }
+</style>
+<script src="/patrickl/scripts/ga.js"></script>
+<script>
+var context = [];
+function setup() {
+	// Get a reference to the elements.
+	var elems = document.querySelectorAll('canvas.progbar');
+	for(var i=0, l=elems.length; i<l; i++) {
+		if (elems[i] && elems[i].getContext) {
+			// Get the 2d context for each and pack them into an array
+			context[elems[i].id] = elems[i].getContext('2d');
+		}
+	}
+	for (i in context) {
+		alert(i + ' - ' + context[i]);
+	}
+}
+document.addEventListener('load',setup,false);
+</script>
+<body>
+<p>recoded version of my <a href="http://www.splintered.co.uk/experiments/9/">daily progress</a> joke experiment, this time using <code>canvas</code> and JavaScript.</p>
+<div>
+<canvas id="day" class="progbar" width="250" height="10"></canvas>
+<p>Loading next day</p>
+<p id="day_display"></p>
+<canvas id="hour" class="progbar" width="250" height="10"></canvas>
+<p>Loading next hour</p>
+<p id="hour_display"></p>
+<canvas id="minute" class="progbar" width="250" height="10"></canvas>
+<p>Loading next minute</p>
+<p id="minute_display"></p>
+</div>
+</body>
+</html>

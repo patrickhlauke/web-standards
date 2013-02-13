@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<title>On-screen keyboard and JS processing test</title>
+<script>
+window.addEventListener('load',function () {
+	var o = document.getElementsByTagName('output')[0];
+	setInterval(function () {
+		o.innerHTML = Math.floor(Math.random()*100000000);
+	}, 1000);
+},false);
+</script>
+<h1>On-screen keyboard and JS processing</h1>
+<p>This page has a bit of scripting that constantly runs and outputs random numbers in the area below.</p>
+<p>Testing to see if, once an on-screen keyboard (mobile, TV) is triggered with the text input below, JS processing is stopped.</p><output>0</output>
+<p><label for="foo">Label:</label> <input type="text" id="foo" name="foo"></p>

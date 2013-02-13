@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<!-- Demo by: Lachlan Hunt and Patrick H. Lauke -->
+<title>Photo Gallery</title>
+<style>
+body { padding: 0; margin: 0; background-image: url(bg.gif);}
+
+.viewer { background: rgba(0, 0, 0, 0.3); position: fixed; height: 240px; width: 240px; top: 0; left: 0;
+          text-align: center; visibility: hidden; }
+.viewer div { padding: 10px; height: 100%; width: 100%; }
+.viewer img { max-width: 100%; max-height: 100%; }
+
+.viewer.thumb { visibility: visible;
+          -o-transition:      top 1s .3s, left 1s .3s, height 1s, width 1s;
+          -webkit-transition: top 1s .3s, left 1s .3s, height 1s, width 1s;
+transition: top 1s .3s, left 1s .3s, height 1s, width 1s;		  }
+
+.viewer.full { height: 500px; width: 500px; left: 300px; visibility: visible;
+          -o-transition:      top 1s .5s, left 1s, height 1.5s .2s, width 1.5s .2s;
+          -webkit-transition: top 1s .5s, left 1s, height 1.5s .2s, width 1.5s .2s;
+transition: top 1s .5s, left 1s, height 1.5s .2s, width 1.5s .2s;		  }
+
+ul, li { margin: 0; padding: 0; display: block; }
+li { background: rgba(0, 0, 0, 0.3); width: 240px; height: 240px;
+     -o-transition: height 1s .3s;
+	 -webkit-transition: height 1s .3s;
+	transition: height 1s .3s;	 }
+li.full { height: 0; }
+
+li>a { display: block; height: 240px; width: 240px; text-align: center; }
+</style>
+
+<script>
+var controller = [];
+var currentView = null;
+
+onload = function() {
+	// Find all the thumbnails
+	var links = document.querySelectorAll(".gallery>li>a");
+	var viewer;
+
+	for (var i = 0; i < links.length; i++) {
+		// Create viewer elements for each thumbnail
+		viewer = document.createElement("div");
+		viewer.className = "viewer";
+
+		// Add full size images to each viewer element
+		var img = document.createElement("img");
+		img.src = links[i].href;
+		img.alt = "";
+		viewer.appendChild(img);
+
+		// Add viewer elements to the DOM
+		document.body.appendChild(viewer);
+
+		// Create the controllers
+		controller[i] = new ViewerController(links[i], viewer);
+	}
+}
+
+function ViewerController(thumb, viewer) {
+	// 0 - hidden
+	// 1 - thumb
+	// 2 - full
+	var currentState = 0;
+	var transitionTo = 0;
+	var cb = null; // callback
+
+	// Add a back reference to this controller
+	thumb.viewController = this;
+	viewer.viewController = this;
+
+	// When one event finishes, run the next in the queue.
+	//viewer.addEventListener("webkitTransitionEnd", nextEvent, false)
+	viewer.addEventListener("OTransitionEnd", nextEvent, false);
+	viewer.addEventListener("click", function(){
+		this.viewController.collapse();
+		currentView = null;
+	}, false);
+
+	thumb.addEventListener("click", toggle, false);
+
+	this.expand = function(callback) {
+		// No-op if in the wrong state
+		if (currentState == 0) {
+			transitionTo = 2;
+			cb = callback;
+
+			viewer.style.top = (thumb.offsetTop - window.scrollY) + "px";
+			viewer.className = "viewer thumb";
+			setTimeout(function() {
+				// Transition to full size
+				thumb.parentNode.className = "full";
+				thumb.parentNode.style.visibility = "hidden";
+				viewer.style.top = "100px";
+				viewer.className = "viewer full";
+				currentState = 1;
+			}, 0);
+		}
+	}
+
+	this.collapse = function(callback) {
+		// No-op if in the wrong state
+		if (currentState == 2) {
+			transitionTo = 0;
+			cb = callback;
+
+			// Restore to thumbnail position, animated
+			thumb.parentNode.className = "";
+			viewer.style.top = (thumb.offsetTop - window.scrollY) + "px";
+			viewer.className = "viewer thumb";
+			currentState = 1;
+		}
+	}
+
+	function toggle(evt) {
+		evt.preventDefault();
+		if (currentState == 0) {
+			if (currentView) {
+				currentView.collapse(function(vc) {
+					return function() { vc.expand(); }
+				}(this.viewController));
+			} else {
+				this.viewController.expand();				
+			}
+			currentView = this.viewController;
+		}
+	}
+
+	function nextEvent() {
+		if (currentState == 1) {
+			// After collapsing, hide the viewer again.
+			if (transitionTo == 0) {
+				thumb.parentNode.style.visibility = "visible";
+				viewer.className = "viewer";
+				currentState = 0;
+			} else {
+				currentState = 2;
+			}
+			if (cb) cb();
+		}
+	}
+}
+</script>
+
+<ul class="gallery">
+	<li><a href="1.jpg"><img src="1-thumb.jpg" width="160" height="240" class="thumb" alt=""></a></li>
+	<li><a href="2.jpg"><img src="2-thumb.jpg" width="160" height="240" class="thumb" alt=""></a></li>
+	<li><a href="3.jpg"><img src="3-thumb.jpg" width="160" height="240" class="thumb" alt=""></a></li>
+	<li><a href="4.jpg"><img src="4-thumb.jpg" width="160" height="240" class="thumb" alt=""></a></li>
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

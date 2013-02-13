@@ -1,0 +1,15 @@
+<!doctype>
+<head>
+<title>HTML5 form validation example - setCustomValidity messages</title>
+</head>
+<body>
+<form>
+<label for="foo">A required field</label>
+<input id="foo" name="foo" type="text" >
+<script>
+document.getElementById('foo').setCustomValidity('Oops, something\'s not quite right here...');
+</script>
+<input type="submit" value="submit">
+</form>
+<p>This always comes up with an error, as we just setCustomValidity which instantly marks the field as invalid unless our script explicitly resets it. check it in Dragonfly!</p>
+</body>

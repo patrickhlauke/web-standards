@@ -1,0 +1,48 @@
+<!doctype html>
+<head>
+<title>Windchime</title>
+<script src="/patrickl/scripts/ga.js"></script>
+<style>
+html, body { background: #999; color: #fff; }
+body {
+	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+	font-size: 0.9em;
+	line-height: 1.2;
+	padding: 0 25px;
+	width: 500px;
+}
+p { margin: 0 0 1em 0; padding: 0; font-size: 0.75em; }
+p small { font-size: 0.5em; color: #ddd; }
+a { color: #eef; }
+audio { display: block; margin: 0; padding: 0; width: 500px; }
+</style>
+</head>
+<body>
+<h1>Windchime</h1>
+
+<p>A simple collection of five <code>audio</code> elements (with alternative <code>source</code>s for both Ogg Vorbis and MP3) being randomly triggered via JavaScript.</p>
+<div id="chime">
+<audio controls>
+	<source src="1.ogg" type="audio/ogg" />
+	<source src="1.mp3" type="audio/mpeg" />
+</audio>
+<audio controls>
+	<source src="2.ogg" type="audio/ogg" />
+	<source src="2.mp3" type="audio/mpeg" />
+</audio>
+<audio controls>
+	<source src="3.ogg" type="audio/ogg" />
+	<source src="3.mp3" type="audio/mpeg" />
+</audio>
+<audio controls>
+	<source src="4.ogg" type="audio/ogg" />
+	<source src="4.mp3" type="audio/mpeg" />
+</audio>
+<audio controls>
+	<source src="5.ogg" type="audio/ogg" />
+	<source src="5.mp3" type="audio/mpeg" />
+</audio>
+
+<p><small>Patrick H. Lauke</small></p>
+</div>
+</body>

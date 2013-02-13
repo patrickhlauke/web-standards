@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<title>Video with CSS transitions</title>
+<script src="/patrickl/scripts/ga.js"></script>
+<style>html { background: #eee; }
+body {
+	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+	font-size: 0.9em;
+	line-height: 1.2;
+	color: #222;
+}
+
+a { color: #227; }
+
+pre { border: 1px #ddd solid; background: #FF9; font-size: 1.2em; padding: 1em; }
+
+video { display: block; }
+video {
+	width: 213px;
+	height: 120px;
+	-o-transition: all 1s ease-in-out;
+	transition: all 1s ease-in-out;
+}
+
+video:hover,video:focus {
+	width: 426px;
+	height: 240px;
+	border: 5px #f00 solid;
+}
+</style>
+<body>
+<h1>Video with CSS transitions</h1>
+<p>HTML5 <code>video</code> element with a <code>:hover</code>/<code>:focus</code> transition.</p>
+<video controls width="426" height="240" id="player">
+	<source src="../videos/fridge.webm" type="video/webm" />
+	<source src="../videos/fridge.ogv" type="video/ogg" />
+	<source src="../videos/fridge.mp4" type="video/mp4" />
+	<p>Download the video in <a href="../videos/fridge.webm">WebM</a>, <a href="../videos/fridge.ogv">Ogg</a> or <a href="../videos/fridge.mp4">MP4</a> format.</p>
+</video>
+<pre><code>
+video {
+	width: 213px;
+	height: 120px;
+	-o-transition: all 1s ease-in-out;
+	transition: all 1s ease-in-out;
+}
+
+<strong>video:hover,video:focus</strong> {
+	width: 426px;
+	height: 240px;
+	border: 5px #f00 solid;
+}</code></pre>
+</body>

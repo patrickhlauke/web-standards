@@ -1,0 +1,139 @@
+<!doctype html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<title>Paranoid</title>
+
+<meta name="viewport" content="width=360,user-scalable=no" />
+
+<style>
+/* typeface: Adore 64 by pixelite@lycos.de http://www.freakyfonts.de/ */
+@font-face {
+    font-family: "Adore64";
+    src: url(Adore64.ttf)
+}
+body { font: 8px Adore64, Courier, sans-serif; background-color: #000031; color: #fff; width: 360px; margin: 20px auto 0 auto; position: relative; }
+h1, h2 { font-size: 16px; margin: 0; padding: 0; text-transform: uppercase; color: #f00; margin-bottom: 8px;}
+p { margin: 0; padding: 0; }
+small { font-size: 8px; }
+a {  color: #f00; }
+canvas { margin: 0 0 8px 0; border-bottom: 2px #555 solid; }
+dt { float: left; }
+#autopilot { font-size: 16px; text-transform: uppercase; position: absolute; top: 200px; left: 110px; background-color: rgba(0,0,0,0.5); }
+#autopilot.off { display: none; }
+</style>
+<script src="/patrickl/scripts/ga.js"></script>
+<script>
+// wrap the whole thing in an object so we don't pollute the global namespace
+var paranoid = {
+	ctx: new Object(),
+	autopilot:true,
+	px:0,
+	x:145,
+	y:145,
+	dx: Math.floor(Math.random()*4+5),
+	dy: Math.floor(Math.random()*4+5),
+	
+	img_bg : new Image(),
+	img_shadow : new Image(),
+	img_walls : new Image(),
+	img_paddle : new Image(),
+	img_ball : new Image(),
+	
+	
+	init: function() {
+		paranoid.img_bg.src = 'remix/background.png';
+		paranoid.img_shadow.src = 'remix/shadow.png';
+		paranoid.img_walls.src = 'remix/walls.png';
+		paranoid.img_paddle.src = 'remix/paddle.png';
+		paranoid.img_ball.src = 'remix/ball.png';
+		
+		var elem = document.getElementById('bouncy');
+
+		paranoid.ctx = elem.getContext('2d');
+		
+		elem.addEventListener('mousemove', function(e){ paranoid.mouse(e);}, false);
+		elem.addEventListener('mouseover', function(e){paranoid.auto(false);}, false);
+		elem.addEventListener('mouseout', function(e){paranoid.auto(true);}, false);
+		document.addEventListener('keydown', function(e){ paranoid.kbd(e);}, true);
+		setInterval(paranoid.bounce,30);
+	},
+
+	auto: function(state) {
+		paranoid.autopilot = state;
+	},
+	
+	kbd: function(e) {
+		switch(e.keyCode) {
+			case 65:
+				paranoid.auto(!paranoid.autopilot);
+				break;
+			case 37:
+				paranoid.px-=30;
+				break;
+			case 39:
+				paranoid.px+=30;
+				break;			
+		}
+	},
+	
+	mouse: function(e) {
+		if(e.offsetX) {
+			paranoid.px = e.offsetX-30;
+		} else if (e.layerX) {
+			paranoid.px = e.layerX-30;
+		}
+	},
+
+	bounce: function() {
+		paranoid.ctx.drawImage(paranoid.img_bg,0,0);
+		paranoid.ctx.drawImage(paranoid.img_shadow,0,0);
+		// ball
+		if (paranoid.x<=20) { paranoid.dx = 0-paranoid.dx; paranoid.x=20; }
+		if ((paranoid.x+paranoid.dx+8)>=340) { paranoid.dx = 0-paranoid.dx; paranoid.x=340; }
+		if (paranoid.y<=15) { paranoid.dy = 0-paranoid.dy; y=15; }
+		if ((paranoid.y+paranoid.dy+8)>=350) {
+			if ((paranoid.px<paranoid.x)&&((paranoid.px+60)>paranoid.x)) {
+				paranoid.dy = 0-paranoid.dy; y=350;
+			} else {
+				// lost ball
+				paranoid.y=16;
+			}
+		}
+		paranoid.x+=paranoid.dx; paranoid.y+=paranoid.dy;
+		paranoid.ctx.drawImage(paranoid.img_ball,paranoid.x,paranoid.y);
+		// paddle
+		if (paranoid.autopilot) { 
+			paranoid.px = paranoid.x-30;
+			document.getElementById('autopilot').className=""
+		} else {
+			document.getElementById('autopilot').className="off"
+		}
+		paranoid.py=350;
+		if (paranoid.px<20) { paranoid.px=20; }
+		if ((paranoid.px+60)>340) { paranoid.px=280; }
+		paranoid.ctx.drawImage(paranoid.img_paddle,paranoid.px,paranoid.py);
+		paranoid.ctx.drawImage(paranoid.img_walls,0,0); // walls drawn last, so paddle shadow always underneath wall
+	}
+
+};
+
+window.addEventListener('load',paranoid.init,false);
+</script>
+</head>
+
+<body>
+<h1>Paranoid</h1>
+<canvas id="bouncy" width="360" height="378"></canvas>
+<h2>Instructions</h2>
+<p>To control the paddle, either use the mouse or the following:</p>
+<dl>
+<dt>(a)</dt>
+<dd>toggle autopilot</dd>
+<dt>(<)</dt>
+<dd>move left</dd>
+<dt>(>)</dt>
+<dd>move right</dd>
+</dl>
+<p><small>Font by <a href="http://www.freakyfonts.de/">freakyfonts.de</a></small></p>
+<p id="autopilot">Autopilot</p>
+</body>

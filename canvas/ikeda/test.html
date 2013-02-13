@@ -1,0 +1,59 @@
+<!doctype html>
+<title>Canvas mandelbrot</title>
+<script src="/patrickl/scripts/ga.js"></script>
+<style>
+</style>
+
+<body>
+<p>using <code>canvas</code> to draw a classic <a href="http://en.wikipedia.org/wiki/Mandelbrot_set">mandelbrot set</a></p>
+<canvas id="ikeda" width="300" height="300"></canvas>
+</body>
+<script>
+
+	// Get a reference to the element.
+	var elem = document.getElementById('ikeda');
+	
+	// Always check for properties and methods, to make sure your code doesn't break 
+	// in other browsers.
+	if (elem && elem.getContext) {
+		// Get the 2d context.
+		var context = elem.getContext('2d');
+	}
+	var Zoom = 1;
+function Mandelbrot()
+{
+    var Width = 300;
+    var Height = 300;
+    var Iters = 25;
+
+	var offsetIm = -1.5;
+	var offsetRe = -2;
+
+    for(y=0; y<=Height; y++)
+    {   var Im = (offsetIm+3*y/Height)*Zoom;
+        for(x=0; x<=Width; x++)
+        { var Re = (offsetRe+3*x/Width)*Zoom;
+            var Zr = Re;
+            var Zi = Im;
+            for(var n = 0; n<=Iters; n++)
+            {   var Zr2 = Zr*Zr;
+                var Zi2 = Zi*Zi;
+                if(Zr2+Zi2 > 4) break;
+                Zi = 2*Zr*Zi+Im; Zr = Zr2-Zi2+Re;
+            }
+            if(n>Iters) n=0;
+            var c1 = (n<Iters/2 ? Math.round(255*2*n/Iters) : 255);
+            var c2 = (n>=Iters/2 ? Math.round(255*2*(n-Iters/2)/Iters) : 0);
+            var num1 = (c1<10 ? "0" : "")+Number(c1).toString(16);
+            var num2 = (c2<10 ? "0" : "")+Number(c2).toString(16);
+			context.fillStyle = "rgb("+c1+","+c2+",0)";
+			context.fillRect(x,y,1,1);
+        }
+    }
+}
+
+elem.addEventListener("click",function () { Zoom-=Zoom/10; Mandelbrot(); }, true);
+
+Mandelbrot();
+
+</script>

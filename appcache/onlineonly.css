@@ -1,0 +1,3 @@
+/* this stylesheet is only available when the application is online */
+
+p#online { background: #555; color: #fff; }

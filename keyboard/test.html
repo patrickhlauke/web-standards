@@ -1,0 +1,111 @@
+﻿<!doctype html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Better CSS outline suppression</title>
+<script src="/patrickl/scripts/ga.js"></script>
+<style type="text/css">
+body { padding: 0 50px; font: 1em Helvetica, Arial, sans-serif; max-width: 40em; margin: 0 auto; }
+
+h2 { border-top: 1px #eee solid; padding-top: 1em; margin-top: 1em; }
+
+pre { font-size: 1.2em; background-color: #ffc; border: 1px #bbb solid; padding: 1em; line-height: 1.5; }
+
+a { color: #f00; }
+
+#outline-suppressed a { outline: none;}
+
+#outline-on-focus a { outline: none; }
+#outline-on-focus a:focus { outline: thin dotted; }
+
+#outline-on-focus-suppressed-active a { outline: none; }
+#outline-on-focus-suppressed-active a:focus { outline: thin dotted; }
+#outline-on-focus-suppressed-active a:active { outline: none; }
+
+#outline-suppressed-on-active a:active { outline: none; }
+
+#outline-suppressed-on-hover-and-active a:hover, #outline-suppressed-on-hover-and-active a:active { outline: none; }
+
+a.ir-indent { width: 175px; height: 50px; display: block; background: url(ir-indent.gif) no-repeat top left; text-indent: -9999em; overflow: hidden; }
+a.ir-offleft { width: 175px; height: 50px; display: block; background: url(ir-offleft.gif) no-repeat top left; position: relative; overflow: hidden; }
+a.ir-offleft span { position: absolute; left: -99em; display: block; overflow: hidden; }
+
+#regular a.ir-indent, #regular a.ir-offleft { overflow: inherit; }
+
+</style>
+</head>
+
+<body>
+<h1>Better CSS outline suppression</h1>
+
+<p>The aim of these tests is to check which combination of <code>:focus</code>, <code>:hover</code> and <code>:active</code> works best in order to suppress the <code>outline</code> when an image-replaced link is clicked with the mouse, but leave it visible for keyboard users tabbing through the page.</p>
+<p class="note"><strong>Update:</strong> it appears that a few bugs in Opera have been ironed out, meaning that <code>overflow:hidden</code> is implemented correctly and the <a href="#outline-on-focus"><cite>Outline suppressed, reintroduced on <code>:focus</code></cite></a> approach may actually be viable now, if you can live with overriding the native focus indicator in Google Chrome, Safari and Opera.</p>
+
+<div id="regular">
+<h2>Default</h2>
+<p><a href="#regular">regular link</a></p>
+<p><a href="#regular" class="ir-indent">image replacement with text indent</a></p>
+<p><a href="#regular" class="ir-offleft"><span>image replacement with extra &lt;span&gt; positioned off-left</span></a></p>
+</div>
+
+<div id="overflow-hidden">
+<h2>Default with <code>overflow:hidden</code></h2>
+<p><a href="#overflow-hidden">regular link</a></p>
+<p><a href="#overflow-hidden" class="ir-indent">image replacement with text indent</a></p>
+<p><a href="#overflow-hidden" class="ir-offleft"><span>image replacement with extra &lt;span&gt; positioned off-left</span></a></p>
+<p>Using <code>overflow: hidden</code> stops image-replaced links from having an <code>outline</code> that "spills over" to the left (when using off-left techniques). <del><strong>Note</strong>: there seems to currently be a bug in Opera that sees the <code>outline</code> still spill over in the second type of image replacement...we're on it.</del></p>
+</div>
+
+<div id="outline-suppressed">
+<h2>Outline suppressed</h2>
+<p><a href="#outline-suppressed">regular link</a></p>
+<p><a href="#outline-suppressed" class="ir-indent">image replacement with text indent</a></p>
+<p><a href="#outline-suppressed" class="ir-offleft"><span>image replacement with extra &lt;span&gt; positioned off-left</span></a></p>
+<pre><code>a { outline: none;}</code></pre>
+<p>This suppresses <code>outline</code> for all users, including those navigating via keyboard. This is often found in sites using <a href="http://meyerweb.com/eric/thoughts/2007/05/01/reset-reloaded/">Eric Meyer's reset.css</a></p>
+</div>
+
+<div id="outline-on-focus">
+<h2>Outline suppressed, reintroduced on <code>:focus</code></h2>
+<p><a href="#outline-on-focus">regular link</a></p>
+<p><a href="#outline-on-focus" class="ir-indent">image replacement with text indent</a></p>
+<p><a href="#outline-on-focus" class="ir-offleft"><span>image replacement with extra &lt;span&gt; positioned off-left</span></a></p>
+<pre><code>a { outline: none; }
+a:focus { outline: thin dotted; }</code></pre>
+<p>Reintroducing <code>outline</code> on <code>:focus</code> also brings it back on <code>:active</code> in IE and Firefox, so it shows when the link it clicked with the mouse. Defining <code>outline: thin dotted</code> explicitly also overrides the standard <code>outline</code> look and feel in Google Chrome, Safari and Opera <del>and results in a <strong>double</strong> <code>outline</code> (native and <code>thin dotted</code>) in Opera</del>.</p>
+</div>
+
+<div id="outline-on-focus-suppressed-active">
+<h2>Outline suppressed, reintroduced on <code>:focus</code>, suppressed on <code>:active</code></h2>
+<p><a href="#outline-on-focus-suppressed-active">regular link</a></p>
+<p><a href="#outline-on-focus-suppressed-active" class="ir-indent">image replacement with text indent</a></p>
+<p><a href="#outline-on-focus-suppressed-active" class="ir-offleft"><span>image replacement with extra &lt;span&gt; positioned off-left</span></a></p>
+<pre><code>a { outline: none; }
+a:focus { outline: thin dotted; }
+a:active { outline: none; }</code></pre>
+<p>This works fine in all browsers, except that it's verbose and still results in non-native <code>outline</code> look in Google Chrome, Safari and Opera <del>, and the <strong>double</strong> <code>outline</code> in Opera as above</del>.</p>
+</div>
+
+<div id="outline-suppressed-on-active">
+<h2>Outline suppressed on <code>:active</code> only</h2>
+<p><a href="#outline-suppressed-on-active">regular link</a></p>
+<p><a href="#outline-suppressed-on-active" class="ir-indent">image replacement with text indent</a></p>
+<p><a href="#outline-suppressed-on-active" class="ir-offleft"><span>image replacement with extra &lt;span&gt; positioned off-left</span></a></p>
+<pre><code>a:active { outline: none; }</code></pre>
+<p>Short and sweet. Instead of suppressing <code>outline</code> on <code>:focus</code>, we just do it on <code>:active</code>. This prevents all browsers from showing an unsightly outline when users click image-replaced links with a mouse, still lets keyboard users see where their focus currently is, and it doesn't override any of the native <code>outline</code> stylings <del>or create a <strong>double</strong> <code>outline</code></del>. Perfect!</p>
+</div>
+
+<div id="outline-suppressed-on-hover-and-active">
+<h2>Outline suppressed on <code>:hover</code> and <code>:active</code></h2>
+<p><a href="#outline-suppressed-on-hover-and-active">regular link</a></p>
+<p><a href="#outline-suppressed-on-hover-and-active" class="ir-indent">image replacement with text indent</a></p>
+<p><a href="#outline-suppressed-on-hover-and-active" class="ir-offleft"><span>image replacement with extra &lt;span&gt; positioned off-left</span></a></p>
+<pre><code>a:hover, a:active { outline: none; }</code></pre>
+<p><strong>Update:</strong> after some recent testing I discovered that there is still an issue with just suppressing <code>outline</code> on <code>:active</code>. It appears that <code>outline</code> still manages to appear in the time between activating a link and the link target loading (which in hindsight is logical – after activation, the link does indeed receive focus). As my test page only uses in-page links, this issue never came up before. The slightly less elegant solution is to also suppress the outline on <code>:hover</code>.</p>
+<p>The only remaining issues with this method: if a user activates a link and then uses the browser's <cite>back</cite> button, the outline becomes visible. Oh, and old versions of Internet Explorer notoriously get confused by the exact meaning of <code>:focus</code>, <code>:hover</code> and <code>:active</code>, so this method fails in <abbr title="Internet Explorer 6">IE6</abbr> and below. Personally, I can live with both of these.</p>
+</div>
+
+<h1>Was it good for you?</h1>
+<p>The final solutions seems obvious and elegant, but it's possible that this breaks horribly in certain other browsers or in combination with other CSS – that's why I'd really love to get feedback on whether or not this is viable. Drop me a line on <a href="mailto:patrick.lauke@opera.com">patrick.lauke@opera.com</a>.</p>
+</body>
+</html>

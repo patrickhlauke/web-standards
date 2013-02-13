@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+<meta charset=utf-8>
+<title>HTML5 forms: some new types / features</title>
+<script src="/patrickl/scripts/ga.js"></script>
+<style>
+html {
+	font-family:Verdana;
+	font-size:1em; max-width: 50em;
+}
+
+input,select,textarea { font-size: 1em; }
+
+pre { padding:1em; border: 1px #ddd solid; background: #FF9; }
+code { font-family:Courier New, Courier, monospace; font-size:1em; }
+h1 {
+	color:#5999DE;
+}
+form {
+	font:100% Lucinda Grande, Sans-serif;
+	margin: 0;
+	padding: 0;	
+	width: 90%;
+	padding: 10px;
+}
+input {
+	margin-bottom:1em; display:table-row;
+}
+label {
+	color:#666666;
+display:table-cell;
+	text-align: right;
+}
+input, textarea {
+	margin-left:10px;
+	display:table-cell;
+}
+.button {
+	padding-left:140px;
+	padding-bottom:5px;
+	padding-top:5px;
+}
+</style>
+
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+</head><body>
+
+
+<h1>HTML5 forms: some new types / features</h1>
+<form onsubmit="this.checkValidity();return false;">
+<label for="foo12">number</label>
+<input type="number" name="foo12" id="foo12" min=0 max=15>
+
+<pre><code>
+&lt;input <strong>type="number"</strong> [...] <strong>min=0 max=15</strong>&gt;
+</code></pre>
+
+
+<label for="foo13">range</label>
+<input type="range" name="foo13" id="foo13" min=0 max=15 step=1 value="0"><output onforminput="value=foo13.value">0</output>
+
+<pre><code>
+&lt;input <strong>type="range"</strong> [...] <strong>min=0 max=15 step=1</strong>&gt;
+&lt;output onforminput="value=blah.value"&gt;0&lt;/output&gt;
+</code></pre>
+
+<label for="foo7">date</label>
+<input type="date" name="foo7" id="foo7">
+
+<pre><code>
+&lt;input <strong>type="date"</strong> [...] &gt;
+</code></pre>
+
+<label for="textdatalist">text with datalist</label>
+<input id="textdatalist" list="mylist" type="text">
+        <datalist id="mylist">
+            <option label="Mr" value="Mr">
+            <option label="Ms" value="Ms">
+            <option label="Prof" value="Mad Professor"> 
+        </datalist>
+
+<pre><code>
+&lt;input [...] <strong>list="mylist"</strong> type="text">
+&lt;datalist <strong>id="mylist"</strong>&gt;
+	&lt;option label="Mr" value="Mr"&gt;
+	&lt;option label="Ms" value="Ms"&gt;
+	&lt;option label="Prof" value="Mad Professor"&gt; 
+&lt;/datalist&gt;
+</code></pre>	
+
+<label for="color">color</label>
+<input id="color" type="color">
+
+<pre><code>
+&lt;input [...] <strong>type="color"</strong>&gt;
+</code></pre>	
+
+</form>
+</body>
+</html>

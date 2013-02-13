@@ -1,0 +1,26 @@
+﻿<!DOCTYPE html>
+<title>Video preload attribute test</title>
+<h1>Video preload attribute test</h1>
+<h2>Fridge - none</h2>
+<video preload="none" controls>
+<source src="../webm/videos/fridge.webm" type="video/webm">
+<source src="../webm/videos/fridge.ogv" type="video/ogg">
+<source src="../webm/videos/fridge.mp4" type="video/mp4">
+</video>
+
+<h2>Garden1 - metadata</h2>
+<video preload="none" controls>
+<source src="../webm/videos/garden1.webm" type="video/webm">
+<source src="../webm/videos/garden1.ogv" type="video/ogg">
+<source src="../webm/videos/garden1.mp4" type="video/mp4">
+</video>
+
+<h2>Garden2 - metadata</h2>
+<video preload="auto" controls>
+<source src="../webm/videos/garden2.webm" type="video/webm">
+<source src="../webm/videos/garden2.ogv" type="video/ogg">
+<source src="../webm/videos/garden2.mp4" type="video/mp4">
+</video>
+
+<h2>Bonus</h2>
+<p>None of the videos have a poster attribute set. Which browsers do manage to grab the first frame, and does the preload attribute have an influence? Best clear the cache before the tests. Also, note the user agent of the request for the video file, as it's not always the actual browser but the device's media framework.</p>
