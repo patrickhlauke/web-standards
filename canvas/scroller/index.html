@@ -28,15 +28,15 @@ a { color: #eef; }
 <body>
 <h1>Wave text scroller</h1>
 <canvas id="c" width="500" height="250"></canvas>
-<p>Sticking with the old-school demo theme started with the <a href="http://people.opera.com/patrickl/experiments/canvas/plasma/">Perlin-based plasma effect</a>, here a basic attempt at a text scroller...</p> 
+<p>Sticking with the old-school demo theme started with the <a href="../plasma/">Perlin-based plasma effect</a>, here a basic attempt at a text scroller...</p> 
 <p><small>Patrick H. Lauke</small></p>
 <script>
 var scroller = {};
-window.addEventListener('load',function() {
+setTimeout(function() {
 	scroller = new Scroller(document.getElementById('c'),"+++ redux rocking it old-school with canvas demos +++ greetz to hixie's pixies and the html5 posse +++ ",'48px hoodlum');
 	scroller.init();
 	setInterval("scroller.draw()",10);
-},false);
+},3000);
 </script>
 </body>
 </html>
