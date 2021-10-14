@@ -1,7 +1,6 @@
 ﻿<!doctype html>
 <title>Mandelbrot</title>
 <style>canvas { cursor:crosshair;border:1px #999 solid; }</style>
-<script src="/patrickl/scripts/ga.js"></script>
 <canvas id=a width=500 height=500></canvas>
 <label for="detail">Detail (fine-coarse)</label>
 <input type=range min=1 max=10 id=detail onchange="detail=Math.floor(this.value);draw_brot(detail)">
