@@ -22,7 +22,7 @@ function handleVisibilityChange() {
 		console.log('awake');
 		bounce.play();
 	} else {
-		setTimeout(function(){that.froggy.src="resting.png";document.title="SLEEPING...";console.log('resting');bounce.pause();},1000+Math.random()*1000);
+		setTimeout(function(){froggy.src="resting.png";document.title="SLEEPING...";console.log('resting');bounce.pause();},1000+Math.random()*1000);
 		document.title="OH, YOU'RE BACK...";
 		console.log('visible...');
 	}
