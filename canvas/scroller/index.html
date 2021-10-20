@@ -2,7 +2,7 @@
 <html>
 <head>
 <title>Wave text scroller in canvas</title>
-<meta name="viewport" content="width=550; user-scalable=false" />
+<meta name="viewport" content="width=550, user-scalable=false" />
 <script src="scroller.js"></script>
 <style>
 /* typeface: Hoodlum Samurai http://www.splintered.co.uk/experiments/105/ */
@@ -21,7 +21,7 @@ body {
 }
 canvas { margin: 0 0 20px 0; display: block; border: 2px #bbb solid; font-family: hoodlum; }
 p { margin: 0 0 1em 0; padding: 0; font-size: 0.75em; }
-p small { font-size: 0.5em; color: #ddd; }
+p small { font-size: 0.85em; color: #ddd; }
 a { color: #eef; }
 </style>
 </head>
@@ -32,11 +32,13 @@ a { color: #eef; }
 <p><small>Patrick H. Lauke</small></p>
 <script>
 var scroller = {};
-setTimeout(function() {
-	scroller = new Scroller(document.getElementById('c'),"+++ redux rocking it old-school with canvas demos +++ greetz to hixie's pixies and the html5 posse +++ ",'48px hoodlum');
+async function scroll(element,message,font) {
+  let ready = await document.fonts.load(font);
+  scroller = new Scroller(element,message,font);
 	scroller.init();
 	setInterval("scroller.draw()",10);
-},3000);
+}
+scroll(document.getElementById('c'),"+++ redux rocking it old-school with canvas demos +++ greetz to hixie's pixies and the html5 posse +++ ",'48px hoodlum');
 </script>
 </body>
 </html>
